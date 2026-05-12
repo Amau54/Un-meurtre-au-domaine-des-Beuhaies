@@ -1,0 +1,1248 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Meurtre au Domaine des Beuhaies — Chloé enquête</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Italianno&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+
+:root{
+  --cream:#faf4ea;
+  --cream-2:#f3e9d5;
+  --paper:#fffaf2;
+  --ink:#3a2a1c;
+  --brown:#5d4037;
+  --brown-2:#6d4c41;
+  --brown-3:#795548;
+  --brown-soft:#8d6e63;
+  --gold:#b8860b;
+  --gold-light:#d4af37;
+  --rose:#c4878c;
+  --rose-light:#e8c5c5;
+  --moss:#7a8471;
+  --danger:#a64237;
+  --shadow:rgba(80,40,20,.15);
+  --sidebar-w:280px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--cream);color:var(--ink);font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.5;height:100%}
+body{overflow:hidden;background:
+  radial-gradient(circle at 0% 0%,rgba(180,140,90,.08),transparent 40%),
+  radial-gradient(circle at 100% 100%,rgba(180,140,90,.08),transparent 40%),
+  var(--cream);}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:var(--brown-2)}
+
+/* ====== TOP BAR ====== */
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:64px;
+  background:linear-gradient(180deg,var(--paper),var(--cream-2));
+  border-bottom:1px solid rgba(120,80,50,.25);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;z-index:60;
+  box-shadow:0 2px 8px var(--shadow);
+}
+.topbar h1{
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:600;
+  font-size:22px;margin:0;color:var(--brown);letter-spacing:.5px;
+}
+.topbar h1::before,.topbar h1::after{content:"❦";color:var(--gold);margin:0 12px;font-size:14px;vertical-align:middle}
+.topbar .act-indicator{
+  font-size:12px;text-transform:uppercase;letter-spacing:2px;
+  color:var(--rose);font-weight:500;
+}
+.topbar .clock{
+  font-family:'Italianno',cursive;font-size:30px;color:var(--brown);
+  display:flex;align-items:center;gap:8px;
+}
+.topbar .clock::before{content:"⏱";font-size:18px;color:var(--gold)}
+
+/* ====== LAYOUT ====== */
+.app{
+  display:flex;height:100vh;padding-top:64px;
+}
+
+/* ====== SIDEBAR (CHARACTERS) ====== */
+.sidebar{
+  width:var(--sidebar-w);
+  background:linear-gradient(180deg,var(--paper),var(--cream-2));
+  border-right:1px solid rgba(120,80,50,.2);
+  overflow-y:auto;
+  box-shadow:2px 0 12px var(--shadow);
+  flex-shrink:0;
+}
+.sidebar h3{
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:600;
+  text-align:center;color:var(--brown);
+  padding:14px 12px 6px;margin:0;font-size:18px;
+  border-bottom:1px solid rgba(120,80,50,.15);
+}
+.sidebar h3::before{content:"❧ ";color:var(--gold)}
+.sidebar h3::after{content:" ❧";color:var(--gold)}
+.sidebar .group-title{
+  font-size:11px;text-transform:uppercase;letter-spacing:1.5px;
+  color:var(--brown-soft);padding:14px 16px 6px;font-weight:500;
+}
+.char-row{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 12px;cursor:pointer;
+  border-bottom:1px solid rgba(120,80,50,.06);
+  transition:background .15s,padding-left .15s;
+  position:relative;
+}
+.char-row:hover{background:var(--cream);padding-left:18px}
+.char-row.active{background:var(--cream-2);border-left:3px solid var(--gold)}
+.char-row .portrait{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--cream-2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;border:2px solid var(--brown-soft);flex-shrink:0;
+}
+.char-row .portrait.suspect{border-color:var(--danger)}
+.char-row .portrait.bavard{border-color:var(--moss)}
+.char-row .portrait.discret{border-color:var(--brown-3)}
+.char-row .portrait.host{border-color:var(--gold)}
+.char-row .info{flex:1;min-width:0}
+.char-row .info .name{font-weight:600;color:var(--brown);font-size:14px;line-height:1.2;font-family:'Playfair Display',serif}
+.char-row .info .sub{font-size:11px;color:var(--brown-soft);text-transform:uppercase;letter-spacing:.8px;margin-top:2px}
+.char-row .sub.suspect{color:var(--danger)}
+.char-row .sub.bavard{color:var(--moss)}
+.char-row .sub.discret{color:var(--brown-3)}
+.char-row .sub.host{color:var(--gold)}
+.char-row .badge-new{
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  width:8px;height:8px;background:var(--rose);border-radius:50%;
+}
+
+/* ====== STAGE (MAIN AREA) ====== */
+.stage{
+  flex:1;overflow-y:auto;padding:24px 32px 80px;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(212,175,55,.06),transparent 50%);
+}
+.location-tabs{
+  display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;
+  padding-bottom:14px;border-bottom:1px solid rgba(120,80,50,.15);
+}
+.loc-btn{
+  background:transparent;border:1px solid transparent;border-radius:20px;
+  padding:6px 14px;font-size:14px;color:var(--brown-2);
+  transition:all .15s;font-family:'Cormorant Garamond',serif;
+}
+.loc-btn:hover{background:var(--cream-2)}
+.loc-btn.active{background:var(--brown);color:var(--paper);border-color:var(--gold)}
+.loc-btn.locked{opacity:.4;cursor:not-allowed}
+.loc-btn.locked::before{content:"🔒 ";font-size:11px}
+.loc-btn .icon{margin-right:4px}
+
+.scene{
+  background:var(--paper);border:1px solid rgba(120,80,50,.2);
+  border-radius:14px;padding:30px;
+  box-shadow:0 4px 20px var(--shadow);
+  position:relative;overflow:hidden;
+}
+.scene::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.scene h2{
+  font-family:'Playfair Display',serif;font-weight:600;font-style:italic;
+  margin:0 0 4px;font-size:30px;color:var(--brown);text-align:center;
+}
+.scene h2 .icon{font-size:28px;margin-right:8px;font-style:normal}
+.scene .scene-sub{
+  text-align:center;color:var(--brown-soft);font-style:italic;
+  margin-bottom:14px;font-size:14px;letter-spacing:.5px;
+}
+.scene .scene-desc{
+  font-size:17px;color:var(--ink);line-height:1.7;
+  padding:14px 0;border-top:1px solid rgba(120,80,50,.1);
+  border-bottom:1px solid rgba(120,80,50,.1);
+  font-style:italic;color:var(--brown-2);
+  text-align:center;max-width:680px;margin:0 auto 14px;
+}
+
+.interest-points{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:14px;margin-top:18px;
+}
+.point{
+  background:linear-gradient(135deg,var(--cream),var(--paper));
+  border:1px solid rgba(120,80,50,.2);
+  border-radius:10px;
+  padding:14px;cursor:pointer;
+  transition:all .15s;
+  position:relative;text-align:center;
+}
+.point:hover{transform:translateY(-2px);box-shadow:0 4px 14px var(--shadow);border-color:var(--gold)}
+.point .icon{font-size:36px;display:block;margin-bottom:6px;line-height:1}
+.point .label{font-family:'Playfair Display',serif;font-weight:600;color:var(--brown);font-size:15px;line-height:1.2}
+.point .hint{font-size:12px;color:var(--brown-soft);font-style:italic;margin-top:2px}
+.point.found{background:linear-gradient(135deg,rgba(212,175,55,.08),var(--paper));border-color:var(--gold-light)}
+.point.found .label::after{content:" ✓";color:var(--moss)}
+.point.locked{opacity:.5;cursor:not-allowed}
+.point.locked::before{
+  content:"🔒";position:absolute;top:8px;right:10px;font-size:14px;
+}
+.point.new::after{
+  content:"✦";position:absolute;top:6px;left:8px;color:var(--rose);font-size:14px;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+.scene-empty{
+  text-align:center;color:var(--brown-soft);font-style:italic;padding:30px;font-size:15px;
+}
+
+/* ====== DIALOGUE MODAL ====== */
+.dlg-back{
+  position:fixed;inset:0;background:rgba(30,18,10,.7);
+  z-index:200;display:none;align-items:center;justify-content:center;padding:20px;
+  backdrop-filter:blur(2px);
+}
+.dlg-back.show{display:flex}
+.dlg{
+  background:var(--paper);max-width:780px;width:100%;
+  max-height:90vh;border-radius:14px;
+  border:2px solid var(--gold);
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
+  display:flex;flex-direction:column;animation:dlgIn .25s ease;
+}
+@keyframes dlgIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:none}}
+.dlg-head{
+  padding:18px 28px 14px;
+  background:linear-gradient(180deg,var(--cream-2),var(--paper));
+  border-radius:12px 12px 0 0;
+  display:flex;align-items:center;gap:14px;
+  border-bottom:1px solid rgba(120,80,50,.15);
+}
+.dlg-head .portrait{
+  width:60px;height:60px;border-radius:50%;
+  background:var(--cream);display:flex;align-items:center;justify-content:center;
+  font-size:30px;border:2px solid var(--brown-soft);flex-shrink:0;
+}
+.dlg-head .portrait.suspect{border-color:var(--danger)}
+.dlg-head .portrait.bavard{border-color:var(--moss)}
+.dlg-head .portrait.discret{border-color:var(--brown-3)}
+.dlg-head .info{flex:1;min-width:0}
+.dlg-head h2{font-family:'Playfair Display',serif;margin:0;font-size:22px;color:var(--brown);font-weight:600}
+.dlg-head .role{font-style:italic;color:var(--brown-soft);font-size:14px;margin-top:2px}
+.dlg-close{
+  background:transparent;border:none;font-size:26px;color:var(--brown-soft);
+  cursor:pointer;line-height:1;padding:4px 12px;border-radius:50%;
+}
+.dlg-close:hover{background:var(--cream-2);color:var(--brown)}
+.dlg-body{padding:18px 28px;overflow-y:auto;flex:1}
+.dlg-body p{margin:.4em 0}
+
+.quote{
+  font-style:italic;color:var(--brown);
+  border-left:3px solid var(--gold);
+  padding:12px 18px;margin:14px 0;
+  background:rgba(212,175,55,.06);
+  border-radius:0 6px 6px 0;line-height:1.7;
+}
+.narration{
+  font-style:italic;color:var(--brown-soft);font-size:14px;
+  text-align:center;margin:10px 0;letter-spacing:.5px;
+}
+.questions{margin-top:14px}
+.questions h4{
+  margin:18px 0 8px;font-family:'Playfair Display',serif;
+  color:var(--brown);font-weight:600;font-size:13px;
+  text-transform:uppercase;letter-spacing:1.5px;
+}
+.questions h4::before{content:"❧ ";color:var(--gold)}
+.q-btn{
+  display:block;width:100%;text-align:left;
+  background:var(--cream);border:1px solid rgba(120,80,50,.2);
+  color:var(--brown);padding:10px 14px;margin:6px 0;
+  border-radius:8px;font-size:15px;
+  transition:all .15s;font-family:inherit;cursor:pointer;
+}
+.q-btn:hover:not(:disabled){background:var(--cream-2);border-color:var(--gold);transform:translateX(3px)}
+.q-btn.confront{
+  background:linear-gradient(135deg,rgba(196,135,140,.15),rgba(212,175,55,.08));
+  border-color:var(--rose);font-weight:500;
+}
+.q-btn.confront::before{content:"⚔ ";color:var(--rose)}
+.q-btn:disabled{opacity:.4;cursor:not-allowed;background:#f0e8d8}
+.q-btn.answered{background:#ede4d0;color:var(--brown-soft);font-style:italic}
+.q-btn.answered::before{content:"✓ ";color:var(--moss)}
+.q-btn.answered.confront::before{content:"✓⚔ "}
+
+.text-card{
+  background:#fdf6e3;border:1px solid #d4a76b;border-radius:6px;
+  padding:14px 18px;margin:12px 0;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  color:#4a3220;line-height:1.7;
+  box-shadow:inset 0 0 20px rgba(180,130,80,.1);
+  position:relative;white-space:pre-wrap;
+}
+.text-card::before{
+  content:"";position:absolute;top:6px;left:6px;right:6px;bottom:6px;
+  border:1px dashed rgba(150,100,60,.3);pointer-events:none;border-radius:4px;
+}
+.text-card.burnt{background:linear-gradient(135deg,#fdf6e3 30%,#3a2a1c)}
+
+.code-box{
+  text-align:center;margin:18px 0;padding:18px;
+  background:var(--cream);border-radius:8px;
+  border:1px solid var(--gold-light);
+}
+.code-box input{
+  font-family:'Playfair Display',serif;font-size:32px;text-align:center;
+  width:160px;letter-spacing:8px;
+  border:2px solid var(--brown-soft);border-radius:6px;
+  padding:6px 10px;background:var(--paper);color:var(--brown);
+}
+.code-box button{
+  background:var(--brown);color:var(--paper);border:1px solid var(--gold);
+  padding:10px 22px;border-radius:6px;font-size:15px;margin-left:12px;
+  font-family:inherit;
+}
+.code-box button:hover{background:var(--brown-3)}
+.code-box .hint{font-size:13px;color:var(--brown-soft);margin-top:8px;font-style:italic}
+.failure{color:var(--danger);font-style:italic;margin:8px 0;text-align:center;font-weight:500}
+
+.success-card{
+  background:linear-gradient(135deg,rgba(212,175,55,.18),rgba(180,140,90,.06));
+  border:2px solid var(--gold);padding:20px;border-radius:10px;
+  margin:14px 0;text-align:center;
+}
+.success-card h3{
+  margin:0 0 10px;color:var(--brown);font-family:'Playfair Display',serif;
+  font-style:italic;font-size:22px;
+}
+
+/* ====== FLOATING ACTIONS ====== */
+.floating-actions{
+  position:fixed;bottom:18px;right:18px;
+  display:flex;flex-direction:column;gap:10px;z-index:80;
+}
+.float-btn{
+  width:54px;height:54px;border-radius:50%;
+  background:var(--brown);color:var(--gold-light);
+  border:2px solid var(--gold);font-size:22px;cursor:pointer;
+  box-shadow:0 4px 14px rgba(0,0,0,.3);
+  transition:transform .15s,background .15s;
+  position:relative;
+}
+.float-btn:hover{transform:scale(1.08);background:var(--brown-3)}
+.float-btn .count{
+  position:absolute;top:-4px;right:-4px;
+  background:var(--rose);color:#fff;font-size:11px;font-weight:600;
+  border-radius:50%;width:22px;height:22px;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--paper);font-family:'Cormorant Garamond',serif;
+}
+
+/* ====== PANELS ====== */
+.panel-back{
+  position:fixed;inset:0;background:rgba(30,18,10,.5);
+  z-index:150;display:none;
+  backdrop-filter:blur(2px);
+}
+.panel-back.show{display:block;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.panel{
+  position:fixed;top:0;right:0;bottom:0;width:420px;max-width:100vw;
+  background:linear-gradient(180deg,var(--paper),var(--cream-2));
+  border-left:2px solid var(--gold);box-shadow:-8px 0 24px rgba(0,0,0,.3);
+  transform:translateX(100%);transition:transform .25s ease;
+  z-index:160;overflow-y:auto;
+  padding:20px 24px;
+}
+.panel.show{transform:none}
+.panel h2{
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:600;
+  font-size:24px;color:var(--brown);margin:0 0 6px;text-align:center;
+}
+.panel h2::before{content:"❦ ";color:var(--gold)}
+.panel h2::after{content:" ❦";color:var(--gold)}
+.panel .close-x{
+  position:absolute;top:14px;left:14px;
+  background:transparent;border:none;font-size:24px;color:var(--brown-soft);cursor:pointer;
+  padding:4px 10px;border-radius:50%;
+}
+.panel .close-x:hover{background:var(--cream-2);color:var(--brown)}
+
+.notebook-entry{
+  background:var(--paper);border-left:3px solid var(--gold);
+  padding:10px 14px;margin:8px 0;border-radius:0 6px 6px 0;font-size:14px;
+}
+.notebook-entry .meta{
+  font-size:11px;color:var(--brown-soft);text-transform:uppercase;
+  letter-spacing:1px;margin-bottom:3px;
+}
+.notebook-entry .body{color:var(--ink);line-height:1.5}
+
+.inventory-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px;
+}
+.inv-item{
+  background:var(--paper);border:1px solid var(--gold-light);
+  border-radius:8px;padding:10px;text-align:center;cursor:pointer;
+  transition:transform .15s;
+}
+.inv-item:hover{transform:translateY(-2px)}
+.inv-item .icon{font-size:28px;display:block;margin-bottom:4px}
+.inv-item .name{font-size:12px;color:var(--brown);font-weight:600;line-height:1.2}
+
+.mj-section{margin-top:18px;padding:14px;background:var(--brown);color:var(--paper);border-radius:10px}
+.mj-section h3{margin:0 0 8px;color:var(--gold-light);font-family:'Playfair Display',serif;font-size:16px}
+.mj-section h3::before{content:""}.mj-section h3::after{content:""}
+.mj-btn{
+  display:block;width:100%;background:var(--paper);color:var(--brown);
+  border:1px solid var(--gold);padding:8px 14px;border-radius:6px;
+  font-size:14px;margin:6px 0;font-family:inherit;cursor:pointer;
+}
+.mj-btn:hover{background:var(--gold);color:#fff}
+.mj-btn:disabled{opacity:.4;cursor:not-allowed}
+.mj-hint{font-size:12px;color:rgba(255,255,255,.7);line-height:1.5;margin-top:6px;font-style:italic}
+
+/* ====== MOBILE ====== */
+@media (max-width:900px){
+  :root{--sidebar-w:200px}
+  .topbar h1{font-size:16px}
+  .topbar h1::before,.topbar h1::after{display:none}
+  .stage{padding:16px}
+  .scene{padding:18px}
+  .scene h2{font-size:22px}
+  .char-row .info .sub{display:none}
+  .panel{width:100vw}
+}
+@media (max-width:640px){
+  :root{--sidebar-w:0}
+  .sidebar{position:fixed;top:64px;left:-280px;bottom:0;width:280px;transition:left .25s;z-index:70}
+  .sidebar.show{left:0;width:280px}
+  .stage{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<div class="topbar">
+  <h1>Domaine des Beuhaies</h1>
+  <div class="act-indicator" id="act-label">Acte I — Vous arrivez</div>
+  <div class="clock" id="time-label">18h00</div>
+</div>
+
+<!-- ===== APP ===== -->
+<div class="app">
+
+  <!-- ===== SIDEBAR: CHARACTERS ===== -->
+  <aside class="sidebar" id="sidebar">
+    <h3>Les Convives</h3>
+    <div id="sidebar-list"></div>
+  </aside>
+
+  <!-- ===== STAGE ===== -->
+  <main class="stage">
+    <div class="location-tabs" id="loc-tabs"></div>
+    <div id="scene-content"></div>
+  </main>
+
+</div>
+
+<!-- ===== FLOATING ACTIONS ===== -->
+<div class="floating-actions">
+  <button class="float-btn" id="btn-inventory" title="Mes objets">🎒<span class="count" id="cnt-inv">0</span></button>
+  <button class="float-btn" id="btn-notebook" title="Mon carnet">📓<span class="count" id="cnt-note">0</span></button>
+  <button class="float-btn" id="btn-mj" title="Sir Amaury (MJ)" style="background:var(--gold);color:#fff">⚜</button>
+</div>
+
+<!-- ===== DIALOG MODAL ===== -->
+<div class="dlg-back" id="dlg-back" onclick="if(event.target===this)closeDlg()">
+  <div class="dlg" role="dialog">
+    <div class="dlg-head">
+      <div class="portrait" id="dlg-portrait"></div>
+      <div class="info">
+        <h2 id="dlg-title">…</h2>
+        <div class="role" id="dlg-role"></div>
+      </div>
+      <button class="dlg-close" onclick="closeDlg()">×</button>
+    </div>
+    <div class="dlg-body" id="dlg-body"></div>
+  </div>
+</div>
+
+<!-- ===== SIDE PANEL ===== -->
+<div class="panel-back" id="panel-back" onclick="closePanel()"></div>
+<div class="panel" id="panel">
+  <button class="close-x" onclick="closePanel()">×</button>
+  <div id="panel-content"></div>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+   ============================================================ */
+const ACTS = [
+  {n:1,name:"Acte I — Vous arrivez",locations:["jardin","potager"],time:"18h00"},
+  {n:2,name:"Acte II — Au salon",locations:["bar","salon"],time:"18h15"},
+  {n:3,name:"Acte III — Dans la maison",locations:["couloir","chambres","placard"],time:"18h30"},
+  {n:4,name:"Acte IV — La dépendance",locations:["dependance"],time:"18h45"}
+];
+
+const LOCATIONS = {
+  jardin:{name:"Le jardin",icon:"🌳",fromAct:1,
+    desc:"L'air sent l'herbe coupée et la cire d'abeille. Une légère brise traverse les rosiers. Vous voyez le banc à l'ombre du tilleul, le barbecue éteint, et cette malle de rotin que Léa aimait tant.",
+    objects:["banc","barbecue","malle_rotin"]},
+  potager:{name:"Le potager",icon:"🌿",fromAct:1,
+    desc:"Rangées de tomates, basilic, framboisiers. L'allée s'enfonce vers un coin discret derrière la haie — l'endroit où Marie et Léa se retrouvaient.",
+    objects:["potager_trace"]},
+  bar:{name:"Le bar",icon:"🍷",fromAct:2,
+    desc:"Tabourets de cuir, manteaux et redingotes posés sur les dossiers. Le buffet sombre, à droite, avec son tiroir où Amaury garde habituellement la clef de la dépendance.",
+    objects:["manteau_nicolas","manteau_theo","manteau_alicia","tiroir_buffet"]},
+  salon:{name:"Le salon du bar",icon:"🛋️",fromAct:2,
+    desc:"La grande pièce où le toast a eu lieu. Le piano à droite, les fauteuils près de la baie, le buffet où trône encore la flûte de Léa, intacte depuis 16h45.",
+    objects:["flute_lea","buffet_salon"]},
+  couloir:{name:"Le couloir intérieur",icon:"🚪",fromAct:3,
+    desc:"Tapisserie damas vieux rose, parquet qui craque. Le couloir mène aux chambres et à la salle de bain. Un placard à linge sombre, à droite.",
+    objects:["porte_manteau"]},
+  chambres:{name:"Les chambres",icon:"🛏️",fromAct:3,
+    desc:"L'étage. Plusieurs chambres réservées aux invités. Celle d'Alicia, en bout de couloir, paraît avoir été visitée en hâte.",
+    objects:["chambre_alicia"]},
+  placard:{name:"Le placard du couloir",icon:"📦",fromAct:3,
+    desc:"Un placard à linge profond, encombré de draps pliés et de coussins. L'endroit idéal pour glisser quelque chose en vitesse.",
+    objects:["mallette_gautier"]},
+  dependance:{name:"La dépendance — l'atelier de Léa",icon:"🏚️",fromAct:4,
+    desc:"Pièce reculée que Léa occupait depuis trois ans comme atelier d'écriture. Bureau encombré de manuscrits, étagères de livres, paquets de lettres rangés par confiance. Un drap couvre le corps.",
+    objects:["corps_lea","tasse_the","paquet_alicia","paquet_marie","carnet_lea","notes_recherche"]}
+};
+
+const CHARACTERS = {
+  amaury:{name:"Sir Amaury Chrétien des Beuhaies",nickname:"Amaury",role:"votre mari, maître du Domaine",statut:"host",icon:"🎩",order:0,
+    presentation:"« Bienvenue chez nous, ma chère. C'est à toi de jouer. Je t'ouvre les pièces à mesure. »",
+    questions:[
+      {id:"ouvrir",label:"Que peux-tu m'ouvrir maintenant ?",act:1,
+        response:"« Pour l'instant, le jardin et le potager. Les pièces intérieures restent fermées tant que tu n'as pas de raison d'y entrer. Fais ton tour, ma douce. »"},
+      {id:"victime",label:"Parle-moi de Léa.",act:1,
+        response:"« Romancière, amie d'enfance. Je lui prêtais la dépendance comme atelier depuis trois ans. Elle y passait ses après-midi. Tout le monde le savait. Elle est arrivée ce matin avec ses dossiers, comme toujours. »"},
+      {id:"clef",label:"Tu m'as dit que la clef avait disparu — explique.",act:3,
+        response:"« Oui. La clef de la dépendance, je la garde dans le tiroir du buffet du bar — c'est l'usage. Quand Victoria a hurlé, j'ai vérifié : la clef y était. Une minute plus tard, plus rien. Quelqu'un l'a prise pendant la cohue. Je n'ai rien dit. Je voulais que tu trouves seule. »"}
+    ]},
+  amandinette:{name:"Lady Amandinette de Parisette",nickname:"Amandinette",role:"Duchesse, épouse du Duc Théodorette",statut:"suspect",icon:"👑",order:1,
+    presentation:"« Duchesse Amandinette de Parisette. Épouse du Duc. Léa était mon amie d'enfance, sa mort me bouleverse. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"alibi",label:"Où étiez-vous cet après-midi ?",act:1,
+        response:"Elle pose ses gants sur ses genoux avec lenteur. « Migraine depuis 17h00. Je me suis reposée à la salle de bain jusqu'à 17h45. Théodorette est resté un moment avec moi. »"},
+      {id:"vu",label:"Qu'avez-vous vu cet après-midi ?",act:1,
+        response:"« Rien, ma chère. J'avais la migraine. »"},
+      {id:"lea_amitie",label:"Vous étiez proches de Léa ?",act:1,
+        response:"« Depuis l'enfance. Sa mort me consterne. Elle avait un don pour les amitiés profondes. »"},
+      {id:"jardin",label:"Lady Cloé Fischer vous a vue traverser le jardin à 17h32.",act:3,confront:true,
+        response:"Un haussement de sourcil parfait. « J'ai pu sortir cinq minutes prendre l'air sur le perron. Clochette aura confondu. »"},
+      {id:"fiole",label:"Une fiole de digitaline a été volée chez Lord Louis.",act:2,requires:["fiole_digitaline"],confront:true,
+        response:"« Un bal il y a une semaine ? Beaucoup d'invités. Je ne vois pas en quoi cela me concerne. »"},
+      {id:"annuaires",label:"Lady Boulet de Myrtilles ne trouve pas votre branche dans ses annuaires.",act:3,requires_response:["amandine_anomalie"],confront:true,
+        response:"Le sourire vacille, une fraction de seconde. « Les annuaires se trompent parfois. Ma famille est ancienne, mais discrète. »"},
+      {id:"final",label:"Brandir le vrai acte de naissance + la lettre du 5 juin",act:4,
+        requires:["acte_naissance","lettre_5_juin"],confront:true,endGame:true,
+        response:"<p class='narration'>Le silence tombe. Tous les regards convergent vers elle. Amandinette pose lentement ses gants sur la table de rotin.</p><div class='quote'>« Oui. Je suis Amandinette de la Grande Leuleu. Et oui, j'ai tué Léa. Elle m'aurait tout pris. »</div><p class='narration'>Théodorette regarde sa femme. Un seul mot, à peine audible : « …Amandinette. » Le dîner attendra.</p>"}
+    ]},
+  theodorette:{name:"Duc Théodorette de Parisette",nickname:"Théodorette",role:"diplomate, époux d'Amandinette",statut:"suspect",icon:"🎩",order:2,
+    presentation:"« Duc Théodorette de Parisette, diplomate. Mon épouse Amandinette et moi sommes très liés à cette maison. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"alibi",label:"Où étiez-vous entre 17h00 et 17h45 ?",act:1,
+        response:"« J'étais avec Amandinette à la salle de bain, de 17h00 à 17h45. Elle avait une migraine. »"},
+      {id:"toast",label:"Avez-vous remarqué quelque chose au toast ?",act:1,
+        response:"« Amandinette et Léa étaient côte à côte. Amandinette a eu un léger faux pas, s'est rattrapée à la coupe de Léa. Léa a ri. Sans conséquence. »"},
+      {id:"romanette_couloir",label:"Lady Romanette vous a vu rentrer du couloir à 17h20, bouleversé.",act:3,requires_response:["theo_couloir_1720"],confront:true,
+        response:"<p class='narration'>Il ferme les yeux un long moment.</p><div class='quote'>« J'ai frappé à la salle de bain à 17h05, pas de réponse. Je suis sorti chercher Amandinette au jardin de 17h15 à 17h20. Je ne l'ai pas trouvée. Pardonnez mon mensonge — j'ai voulu la protéger. »</div>",reveals:["theo_alibi_brise"]},
+      {id:"vienne",label:"Brandir la lettre de chantage trouvée dans votre manteau",act:2,requires:["lettre_vienne"],confront:true,
+        response:"<p class='narration'>Sa main tremble.</p><div class='quote'>« Léa savait. Pour Vienne. Elle me faisait chanter. Mille cinq cents livres. Je n'avais pas encore payé. Mais je ne l'ai pas tuée. Je vous le jure. »</div>",reveals:["vienne_avoue"]},
+      {id:"soupcon",label:"Soupçonnez-vous Amandinette ?",act:3,
+        response:"Le ton se durcit. « Ma femme est innocente. N'osez pas insinuer cela. »"}
+    ]},
+  louis:{name:"Lord Louis-Marc de Riegel",nickname:"Louis",role:"médecin, époux de Marie",statut:"suspect",icon:"⚕️",order:3,
+    presentation:"« Lord Louis-Marc de Riegel, médecin. Mon épouse Marie est pianiste. Nous fréquentons le Domaine depuis longtemps. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"mort",label:"Cause et heure de la mort ?",act:1,
+        response:"« Empoisonnement à la digitaline. Mort vers 17h25. Cardiotonique puissant. Une dose létale agit en <b>20 à 40 minutes</b> selon le poids et l'état de l'estomac : nausées, palpitations, syncope cardiaque. Sans goût marqué dans un alcool sucré. »",reveals:["delai_digitaline"]},
+      {id:"horloge",label:"Donc, ingestion vers… ?",act:1,requires_response:["delai_digitaline"],
+        response:"« Calcul simple. Si elle est morte à 17h25, elle a ingéré la substance entre 16h45 et 17h05. Le toast est à 16h45. »",reveals:["toast_empoisonnement"]},
+      {id:"dispute",label:"Vous vous êtes disputé avec Léa à 16h20.",act:1,
+        response:"« Un échange tendu. Affaires personnelles. Rien qui vous concerne. »"},
+      {id:"alibi",label:"Où étiez-vous entre 16h55 et 17h25 ?",act:1,
+        response:"« Au banc du jardin. Seul. Je fumais. »"},
+      {id:"vol_fiole",label:"D'où vient cette digitaline ?",act:2,
+        response:"« Probablement de mon stock. Une fiole m'a été volée chez moi récemment. Je ne sais pas qui. »"},
+      {id:"bal",label:"Quand exactement ?",act:3,requires_response:["delai_digitaline"],
+        response:"« Bal organisé chez moi il y a une semaine. Une quarantaine d'invités, allées et venues dans toute la maison. La fiole était dans ma sacoche médicale, dans mon cabinet. Je ne saurais désigner personne. »"},
+      {id:"mot_banc",label:"Brandir le mot retrouvé au banc",act:1,requires:["mot_banc"],confront:true,
+        response:"<p class='narration'>Il blêmit.</p><div class='quote'>« Oui. Léa savait. Pour Gautier. Mais je ne l'ai pas tuée. Marie ne sait rien. C'est mon plus grand crime. »</div>",reveals:["liaison_louis_gautier"]}
+    ]},
+  marie:{name:"Lady Marie de Riegel",nickname:"Marie",role:"pianiste, épouse de Louis",statut:"discret",icon:"🎹",order:4,
+    presentation:"« Lady Marie de Riegel, pianiste. Épouse de Louis. Léa était mon amie la plus chère. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"alibi",label:"Où étiez-vous entre 17h00 et 17h45 ?",act:1,
+        response:"« Au piano. Alicia tournait les pages. Romanette lisait à côté. Lady Boulet de Myrtilles est passée vers 17h30. »"},
+      {id:"couloir",label:"Avez-vous vu quelqu'un traverser ?",act:2,
+        response:"« Du coin de l'œil, j'ai vu quelqu'un traverser le couloir vers 17h15-17h17, en direction du jardin. Je n'ai pas reconnu — j'étais sur un passage difficile. »"},
+      {id:"croire",label:"Qui aurait pu vouloir tuer Léa ?",act:2,
+        response:"<p>Sa voix baisse, presque un souffle.</p><div class='quote'>« Amandinette la regardait d'une drôle de façon, froide. Et juste avant le toast, je l'ai entendue dire à Léa : <i>Nous devons parler. Seules.</i>… »</div><div class='quote'>« Nicolas l'avait haïe ouvertement ce matin. »</div><div class='quote'>« Gautier avait l'air d'un homme aux abois. »</div><div class='quote'>« Clochette était bizarrement nerveuse pendant le toast. »</div>"},
+      {id:"potager",label:"Victoria vous a vue au potager avec Léa à 16h50.",act:2,confront:true,
+        response:"« Une amie d'enfance qui m'embrasse, ce n'est rien. »",reveals:["marie_nie_potager"]},
+      {id:"insister_potager",label:"« Ce n'est rien ? J'ai du mal à vous croire. »",act:2,requires_response:["marie_nie_potager"],confront:true,
+        response:"<p class='narration'>Ses doigts se crispent.</p><div class='quote'>« Léa était mon amante. Depuis six mois. Je ne l'ai jamais quittée. Louis ne sait pas. »</div>",reveals:["liaison_marie_lea"]},
+      {id:"lettres",label:"« Ce paquet vous appartient. »",act:4,requires:["paquet_marie"],confront:true,
+        response:"<p class='narration'>Elle reconnaît son écriture sur le ruban.</p><div class='quote'>« Oui. Elle les gardait pour moi. Quand Victoria a crié, j'y ai pensé une seconde — récupérer mes lettres avant qu'on entre. Je n'ai pas pu bouger, j'étais au piano. Alicia, elle, a pu. »</div>"}
+    ]},
+  gautier:{name:"Lord Gautier de Lemoine",nickname:"Gautier",role:"financier, époux d'Alicia",statut:"suspect",icon:"💼",order:5,
+    presentation:"« Lord Gautier de Lemoine, finances et placements. Mon épouse Alicia m'accompagne, comme toujours. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"alibi",label:"Où étiez-vous entre 17h10 et 17h33 ?",act:1,
+        response:"« Je suis sorti fumer au potager, j'ai pris l'air. Je suis rentré vers 17h33. »"},
+      {id:"mallette",label:"Pourquoi cette mallette sous votre redingote ?",act:2,confront:true,
+        response:"« Une serviette d'affaires, rien qui ne concerne cette histoire. »",reveals:["gautier_nie_mallette"]},
+      {id:"mallette_brandir",label:"Brandir le plan + la note de la mallette",act:3,requires:["plan_domaine","note_rendezvous"],confront:true,
+        response:"<p class='narration'>Il s'effondre.</p><div class='quote'>« Cinq mille livres. Léa me faisait chanter. Mon rendez-vous était à 17h30 — à la dépendance. La porte était fermée. Je suis reparti. Je n'ai pas tué cette femme, je le jure. »</div>",reveals:["gautier_chantage"]},
+      {id:"louis",label:"Léa vous faisait chanter sur quoi ?",act:3,requires_response:["gautier_chantage"],confront:true,
+        response:"<div class='quote'>« …Louis. Cinq ans. C'est tout ce que j'avais. »</div>",reveals:["liaison_louis_gautier"]},
+      {id:"alicia",label:"Votre épouse sait pour vos dettes ?",act:3,
+        response:"« Ne lui dites pas pour la ruine. Je vous en supplie. »"}
+    ]},
+  alicia:{name:"Lady Alicia de Lemoine",nickname:"Alicia",role:"épouse de Gautier",statut:"discret",icon:"🎼",order:6,
+    presentation:"« Lady Alicia de Lemoine, épouse de Gautier. Léa était une de mes plus proches amies. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"alibi",label:"Où étiez-vous entre 17h00 et 17h45 ?",act:1,
+        response:"« Au piano. Je tournais les pages pour Marie. Marie et Lady Romanette peuvent confirmer. »"},
+      {id:"absence",label:"Vous vous êtes absentée brièvement ?",act:1,
+        response:"« Cinq minutes à la salle de bain juste avant le toast. Lady Boulet de Myrtilles m'a vue revenir. »"},
+      {id:"gautier",label:"Que dites-vous de votre mari aujourd'hui ?",act:2,
+        response:"« Mon mari est inquiet depuis ce matin. Il a regardé sa montre cinq fois pendant le toast. Il est sorti précipitamment vers 17h10 avec sa mallette serrée sous le bras. Il est rentré pâle vers 17h33. »"},
+      {id:"bar_1758",label:"Lady Victoria vous a vue entrer au bar à 17h58.",act:3,requires_response:["alicia_bar_1758"],confront:true,
+        response:"« Oui, j'ai pris la clef. Je voulais protéger Gautier — j'avais peur qu'il ait fait une bêtise. C'est tout. »",reveals:["alicia_premier_aveu"]},
+      {id:"insister",label:"« Vraiment ? Et Nicolas ? »",act:3,requires_response:["alicia_premier_aveu"],confront:true,
+        response:"<p class='narration'>Le visage d'Alicia se décompose.</p><div class='quote'>« La vérité… Léa gardait pour moi des lettres avec Nicolas. Il y a un an. Je ne pouvais pas les avoir chez moi — Gautier les aurait trouvées et m'aurait ruinée. Quand Léa est morte, j'ai paniqué. Je voulais entrer dans la dépendance avant vous, récupérer mes lettres. J'ai pris la clef. C'est tout. Je n'ai pas tué Léa. »</div><p class='narration'>Elle tend la clef. Vous la prenez.</p>",reveals:["clef_dependance_obtenue"],givesItem:"clef_dependance"}
+    ]},
+  nicolas:{name:"Lord Nicolas de Picolas",nickname:"Nicolas",role:"polémiste, fiancé secret de Romanette",statut:"suspect",icon:"🪶",order:7,
+    presentation:"« Lord Nicolas de Picolas, plumitif. Bien connu de cette maison. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"eclat",label:"Cet éclat avec Léa à 16h40 ?",act:1,
+        response:"« Oui, j'ai pété un câble contre cette commère. J'ai dit qu'elle ne publierait pas une ligne de plus. Elle allait écrire sur ma famille. »"},
+      {id:"alibi",label:"Où étiez-vous entre 16h50 et 17h45 ?",act:1,
+        response:"« De 16h50 à 17h15 : jardin, seul. De 17h15 à 17h25 : lisière de forêt, seul. De 17h25 à 17h45 : avec Sir Tatoine à la lisière. »"},
+      {id:"louis_banc",label:"Avez-vous vu Louis ?",act:1,
+        response:"« Pendant que je prenais l'air au jardin vers 17h00-17h15, j'apercevais Louis sur le banc. Il sortait quelque chose de sa poche, gestes nerveux. C'était louche. »"},
+      {id:"fiole",label:"Cette fiole vide dans votre manteau.",act:2,requires:["fiole_digitaline"],confront:true,
+        response:"« Je n'ai jamais vu cette fiole ! Quelqu'un l'a glissée ! À cette heure-là, Gautier rentrait du jardin l'air d'un homme qui revenait d'un mauvais coup. »"},
+      {id:"plumeau",label:"Vous êtes M. Plumeau.",act:3,requires_response:["plumeau_indice"],confront:true,
+        response:"<div class='quote'>« Oui. C'est moi. Léa m'aurait démasqué. On ne tue pas pour une plume. »</div>",reveals:["plumeau_avoue"]},
+      {id:"alicia_lettres",label:"Et ces lettres avec Lady Alicia ?",act:4,requires:["paquet_alicia"],confront:true,
+        response:"<div class='quote'>« Il y a un an. C'était bref. Nous avons rompu avant Romanette. J'avais cru à mille choses, je n'en regrette qu'une. »</div>"}
+    ]},
+  boulet:{name:"Lady Boulet de Myrtilles",nickname:"Boulet",role:"lectrice d'annuaires, discrète",statut:"bavard",icon:"📚",order:8,
+    presentation:"« Lady Boulet de Myrtilles, généalogiste amateur. Je passe le plus clair de mes après-midi avec mes annuaires. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"dispute_gautier",label:"Avez-vous vu Gautier et Léa se disputer ?",act:1,
+        response:"« Depuis la fenêtre du salon du bar, vers 16h15, je les ai vus se disputer dans le jardin. Léa lui a tendu un papier, il l'a fourré dans sa poche. »"},
+      {id:"silhouette",label:"Quelque chose près des manteaux à 17h36 ?",act:2,
+        response:"« Je revenais de la salle de bain par le couloir vers 17h36. La porte du bar était entrouverte. J'ai aperçu quelqu'un penché sur les manteaux, glissant quelque chose dans une veste. Le rayon de soleil m'a empêchée de voir le visage. »"},
+      {id:"nicolas_eclat",label:"Sur l'éclat de Nicolas ce matin ?",act:2,
+        response:"« Je l'ai entendu jurer que Léa "paierait pour ce qu'elle disait sur sa famille". Et Romanette ne le quittait pas des yeux pendant son éclat — pas comme une amie, comme une femme amoureuse. »",reveals:["plumeau_indice","fiances_nicolas_romanette"]},
+      {id:"gautier_placard",label:"Vu Gautier dans le couloir ?",act:3,
+        response:"« Je passais dans le couloir intérieur vers 17h33. J'ai vu Gautier glisser quelque chose de lourd dans le placard, vivement. »"},
+      {id:"alicia_bar",label:"Avez-vous vu Alicia pendant la cohue ?",act:3,
+        response:"« Oui. À 18h00, pendant que tout le monde s'agitait, j'ai vu Alicia s'attarder près du bar. Elle paraissait perdue. »",reveals:["alicia_bar_1758"]},
+      {id:"annuaires",label:"Et la Duchesse Amandinette dans vos annuaires ?",act:2,
+        response:"« Mes annuaires couvrent les Parisette sur quatre générations. Je ne retrouve pas la branche dont parle la Duchesse. Et certaines anecdotes d'enfance ne collent pas avec les chroniques. »",reveals:["amandine_anomalie"]},
+      {id:"tatoine",label:"Léa savait pour vous et Tatoine ?",act:3,confront:true,
+        response:"<p class='narration'>Elle ferme les yeux.</p><div class='quote'>« Il y a six ans… quelques lettres. Une promenade dans un jardin, rien de plus. Léa l'avait su par hasard. Elle me faisait payer 200 livres par trimestre. Je payais surtout pour que Clochette ne sache jamais. »</div>",reveals:["boulet_aveu"]}
+    ]},
+  romanette:{name:"Lady Romanette de Burlesque",nickname:"Romanette",role:"lectrice près du piano",statut:"bavard",icon:"📖",order:9,
+    presentation:"« Lady Romanette de Burlesque, lectrice. J'aime ce coin près du piano de Lady Marie. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"vu",label:"Qu'avez-vous vu cet après-midi ?",act:1,
+        response:"<p>« Plusieurs choses :</p><p>• Le Duc Théodorette qui rentre du couloir vers <b>17h20</b>, l'air complètement défait. Sa femme était censée se reposer pour sa migraine — pourquoi venait-il du dehors ?</p><p>• Marie sortant troublée du potager vers <b>16h55</b>, Léa derrière.</p><p>• Lord Gautier passant pressé dans le couloir vers <b>17h33</b>, quelque chose sous sa redingote.</p><p>• Alicia montant brièvement dans sa chambre vers <b>18h05</b>, comme pour dissimuler quelque chose. »</p>",reveals:["theo_couloir_1720"]},
+      {id:"toast",label:"Au toast, vous avez entendu quoi ?",act:1,
+        response:"« J'ai entendu la Duchesse Amandinette glisser à Léa : <i>Nous devons parler. Seules. Tout de suite après.</i> Léa a hoché la tête sans rien dire. »",reveals:["amandinette_toast"]},
+      {id:"piano",label:"Marie a-t-elle joué bizarrement ?",act:2,
+        response:"« Marie a fait trois fausses notes — chose impensable chez elle. Et Alicia regardait par la fenêtre toutes les deux mesures. »"},
+      {id:"clochette",label:"Que savez-vous de Lady Cloé Fischer ?",act:2,
+        response:"« Clochette est ma cousine éloignée. Je sais qu'elle fréquente les cercles de jeu. Je l'ai confrontée l'an dernier, elle avait juré d'arrêter. Elle a paru particulièrement nerveuse aujourd'hui. »",reveals:["clochette_jeu"]},
+      {id:"nicolas_defense",label:"La fiole dans le manteau de Nicolas, c'est lui le coupable.",act:2,confront:true,
+        response:"Elle se lève. « Nicolas n'est pas un assassin. Il était à la lisière avec Sir Tatoine. <b>Je le sais.</b> » Vous insistez du regard. « Parce qu'il est mon fiancé. Annonce le mois prochain. Je ne le laisserai pas accuser à tort. Et oui, il est M. Plumeau. Je l'aide. Léa nous faisait chanter. »",reveals:["fiances_nicolas_romanette","plumeau_indice","plumeau_avoue"]}
+    ]},
+  tatoine:{name:"Sir Tatoine de Crevonville",nickname:"Tatoine",role:"diplomate, époux de Clochette",statut:"bavard",icon:"🚬",order:10,
+    presentation:"« Sir Tatoine de Crevonville, diplomate. Ami du Duc Théodorette. Mon épouse Clochette est près de moi. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"vu",label:"Qu'avez-vous vu cet après-midi ?",act:1,
+        response:"<p>« Je fumais au jardin entre 17h00 et 17h25, j'ai eu une bonne vue :</p><p>• La dispute Louis-Léa à 16h20.</p><p>• Louis au banc, gestes nerveux, papier qui lui échappe.</p><p>• Gautier qui passe vers 17h10, mallette sous la redingote, vers le potager.</p><p>• La Duchesse Amandinette qui traverse le jardin d'un pas pressé vers 17h15. Elle ne m'a pas remarqué.</p><p>• Théodorette qui sort affolé vers 17h15. »</p>",reveals:["amandinette_1715","theo_dehors_1715","louis_banc_papier"]},
+      {id:"malle",label:"Cette malle de rotin dans le jardin ?",act:1,
+        response:"« Cette malle, c'est à Léa. Elle aimait venir s'asseoir là pour lire l'après-midi. Elle y rangeait son éventail, ses livres. Sir Amaury lui prêtait depuis des années. »",reveals:["malle_appartient_lea"]},
+      {id:"vienne",label:"Vous savez quelque chose sur Vienne ?",act:2,
+        response:"« Je n'ai jamais eu de confirmation, mais je devine qu'il y a eu quelque chose à Vienne. Théodorette a été convoqué deux fois en privé par notre président de comité. Si Léa l'avait découvert — elle savait toujours tout — je le crois capable de l'avoir empoisonnée. <i>Précision : pas de preuve, déduction de couloir.</i> »",reveals:["vienne_indice"]},
+      {id:"gautier_ruine",label:"Gautier paraît étrange.",act:3,
+        response:"« Je crois qu'il est au bord de la ruine. Deux ventes immobilières discrètes ces six derniers mois. Il a refusé deux invitations à investir. »"},
+      {id:"louis_double",label:"Louis, vous en pensez quoi ?",act:2,
+        response:"« Un jour en ville, je l'ai aperçu avec un autre homme. Une attitude particulière. »",reveals:["louis_double_indice"]},
+      {id:"nicolas_alibi",label:"Et Nicolas ?",act:1,
+        response:"« J'étais à la lisière avec lui de 17h25 à 17h45. Nous avons fumé et parlé. »"},
+      {id:"boulet",label:"Léa savait pour vous et Boulet ?",act:3,requires_response:["boulet_aveu"],confront:true,
+        response:"« Il y a six ans… une erreur de jeunesse. Léa savait. Ne le dites pas à Clochette, je vous en prie. »"}
+    ]},
+  clochette:{name:"Lady Cloé Fischer de Crevonville",nickname:"Clochette",role:"mondaine, épouse de Tatoine",statut:"bavard",icon:"🃏",order:11,
+    presentation:"« Lady Cloé Fischer de Crevonville, épouse de Tatoine. Je ne manque jamais un anniversaire des Beuhaies. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"vu",label:"Qu'avez-vous vu depuis le bar ?",act:1,
+        response:"<p>« J'avais une vue par la baie sur le jardin :</p><p>• Tatoine fumant au jardin vers 17h05.</p><p>• Lord Gautier traverser vers 17h10, mallette sous le bras.</p><p>• Louis rentrer l'air sec vers 17h20. »</p>"},
+      {id:"absences",label:"Vous-même, vous êtes-vous absentée ?",act:2,
+        response:"« Deux fois : à 17h33 (salle de bain, 3 min), à 17h42 (cellier, Sir Amaury m'avait envoyée chercher une bouteille, 3 min). »"},
+      {id:"amandinette",label:"Quelqu'un d'autre dans le jardin ?",act:3,
+        response:"<p class='narration'>Elle hésite.</p><p>« Maintenant que vous insistez… oui. À <b>17h32</b>, j'ai vu la Duchesse Amandinette traverser le jardin, pressée. Cela m'a frappée parce qu'elle était censée se reposer. Mais je me suis dit que je m'étais trompée. »</p>",reveals:["amandinette_1732"]},
+      {id:"jeu",label:"Vos absences le mardi soir…",act:3,requires_response:["clochette_jeu"],confront:true,
+        response:"<div class='quote'>« Je joue. Voilà. Depuis trois ans. J'ai des dettes effroyables. J'ai vendu des bijoux. Léa savait. Elle me faisait chanter — mille livres. Je l'ai suppliée. Elle a ri. Tatoine, pardonne-moi. »</div>"}
+    ]},
+  victoria:{name:"Lady Victoria Chevessand",nickname:"Victoria",role:"amie de Chloé, découvre le corps",statut:"bavard",icon:"🌹",order:12,
+    presentation:"« Lady Victoria Chevessand, amie de Chloé depuis l'école. C'est moi qui ai découvert le corps. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"decouverte",label:"Comment as-tu découvert le corps ?",act:1,
+        response:"« Je suis allée chercher Léa vers 17h55. La porte de la dépendance était fermée à clef. J'ai regardé par la fenêtre du nord. Elle était à terre, immobile. Je suis revenue en hurlant. »"},
+      {id:"potager",label:"Marie au potager ?",act:1,
+        response:"« Vers 16h50, je me promenais. J'ai vu Marie et Léa s'embrasser dans le potager. Je suis restée pétrifiée derrière les arbres. Je n'en avais parlé à personne. »",reveals:["marie_potager_vu"]},
+      {id:"billet",label:"Tu as vu autre chose ce matin ?",act:2,
+        response:"« Dans le hall vers 16h05, j'ai vu Léa glisser un petit billet à la Duchesse Amandinette. Geste furtif. Amandinette l'a fourré dans son réticule. »",reveals:["billet_lea_amandinette"]},
+      {id:"alicia",label:"Et après tes cris à 17h58 ?",act:3,
+        response:"« Maintenant que vous me posez la question, ma chère… j'ai vu Lady Alicia entrer au bar juste après mes cris. J'avais pensé qu'elle cherchait des sels. »",reveals:["alicia_bar_1758"]},
+      {id:"ragots",label:"Tes ragots sur les convives ?",act:1,
+        response:"<p>Elle se penche, ravie.</p><p>• <b>Amandinette</b> : « Étrange que personne ne connaisse les Parisette de sa branche. »</p><p>• <b>Théodorette</b> : « Assombri depuis trois mois. Vienne, paraît-il. »</p><p>• <b>Louis</b> : « Sa main tremble. Pas celle du chirurgien — celle de l'homme. »</p><p>• <b>Marie</b> : « Joue mieux du piano qu'elle ne sourit. »</p><p>• <b>Gautier</b> : « On murmure qu'il vend à perte. »</p><p>• <b>Alicia</b> : « Deux semaines chez une cousine en avril. Sauf que sa cousine est morte l'an dernier. »</p><p>• <b>Nicolas</b> : « On ne crie pas sur Léa pour des raisons de famille — on crie pour des raisons de cœur. »</p>",reveals:["amandine_anomalie","vienne_indice"]}
+    ]}
+};
+
+const OBJECTS = {
+  banc:{name:"Le banc du jardin",icon:"🪑",location:"jardin",fromAct:1,
+    desc:"Un banc de pierre, à l'ombre du tilleul. Le cendrier déborde de mégots — quelqu'un a fumé là longtemps. Une trace au sol, comme si un papier avait roulé.",
+    interactive:[{label:"Fouiller au pied du banc",gives:"mot_banc"}]},
+  mot_banc:{name:"Mot perdu de Léa",icon:"📄",
+    desc:"Un papier replié, légèrement carbonisé sur un bord.",
+    text:"Mon cher Louis, je sais pour Gautier. Cinq cents livres pour mon silence. — L."},
+  barbecue:{name:"Le barbecue",icon:"🔥",location:"jardin",fromAct:1,
+    desc:"Encore tiède. Quelqu'un y a brûlé quelque chose récemment. Une cendre fine couvre la grille.",
+    interactive:[{label:"Fouiller dans les cendres",gives:"fragment_barbecue"}]},
+  fragment_barbecue:{name:"Fragment brûlé",icon:"🥀",burnt:true,
+    desc:"Papier partiellement consumé. Deux fragments lisibles.",
+    text:"...la Grande Leu...\n...e Pavy"},
+  malle_rotin:{name:"La malle de rotin",icon:"🧺",location:"jardin",fromAct:1,
+    desc:"Une malle de rotin posée près de la haie. Sans cadenas. Vous l'ouvrez : un châle, un livre annoté, un éventail abîmé — et au fond, une petite boîte en bois fermée par un cadenas à trois chiffres.",
+    interactive:[
+      {label:"Examiner la boîte cadenassée",gives:"boite_cadenassee"}
+    ]},
+  boite_cadenassee:{name:"Boîte cadenassée",icon:"🔐",
+    desc:"Petite boîte en bois, anonyme. Cadenas à combinaison à 3 chiffres.",
+    isCode:true,code:"173",
+    onCodeSuccess:["acte_naissance","lettre_5_juin"],
+    onCodeFail:"Le cadenas refuse de céder. Il vous faut le bon code — sans doute lié à ce que Léa appelait son <i>vrai nom</i>."},
+  acte_naissance:{name:"Vrai acte de naissance",icon:"📜",
+    desc:"Papier jauni, écriture officielle.",
+    text:"COMMUNE DE LA GRANDE LEULEU — Acte de naissance n° 47\nLe quinze octobre mil huit cent quatre-vingt-dix-huit est née Amandine Marguerite de la Grande Leuleu, fille de Jean de la Grande Leuleu, sabotier, et de Catherine née Pâtissier. — Signé : le Maire."},
+  lettre_5_juin:{name:"Lettre de Léa du 5 juin",icon:"💌",
+    desc:"Datée de la veille. Écriture nerveuse mais déterminée.",
+    text:"Chère Amandine, j'ai tergiversé six mois. Je ne peux plus garder ce silence. Théodorette mérite de savoir qui vous êtes vraiment. Je lui parlerai ce week-end. Pour vous, c'est la fin du jeu. — L."},
+  potager_trace:{name:"Le coin discret",icon:"🌿",location:"potager",fromAct:1,
+    desc:"Derrière les framboisiers, l'herbe est foulée. Deux paires d'empreintes de talons, face à face. Aucun objet, mais l'endroit raconte qu'on s'y est retrouvé."},
+  manteau_nicolas:{name:"Le manteau de Lord Nicolas",icon:"🧥",location:"bar",fromAct:2,
+    desc:"Sur un tabouret. Nicolas n'est pas à proximité — il vient de rentrer de la lisière. Une bosse dans la poche extérieure.",
+    interactive:[{label:"Fouiller les poches",gives:"fiole_digitaline"}]},
+  fiole_digitaline:{name:"Fiole vide — « digitaline »",icon:"🧪",
+    desc:"Petite fiole de verre, bouchon de liège, vide.",
+    text:"DIGITALINE — usage interne strict — Dr Louis-Marc de Riegel"},
+  manteau_theo:{name:"Le manteau du Duc Théodorette",icon:"🧥",location:"bar",fromAct:2,
+    desc:"Sur un tabouret. Poche intérieure renflée par un pli de papier.",
+    interactive:[{label:"Fouiller la poche intérieure",gives:"lettre_vienne"}]},
+  lettre_vienne:{name:"Lettre — Vienne",icon:"💌",
+    desc:"Écriture de Léa, encre brune.",
+    text:"Mon cher Duc, je sais pour Vienne. Mille cinq cents livres pour mon silence. — L."},
+  manteau_alicia:{name:"Le manteau d'Alicia",icon:"🧥",location:"bar",fromAct:2,
+    desc:"Sur un tabouret. La doublure paraît étrangement épaisse, mais vous ne sentez rien quand vous la tâtez de l'extérieur. <i>(C'est par Alicia elle-même qu'il faudra obtenir ce qu'elle dissimule.)</i>"},
+  tiroir_buffet:{name:"Le tiroir du buffet",icon:"🗄️",location:"bar",fromAct:2,
+    desc:"Vous l'ouvrez. Serviettes, tire-bouchon, cendrier de rechange. <b>Pas de clef.</b> Pourtant, Amaury vous a dit que la clef de la dépendance y reposait habituellement. Elle a disparu.",
+    revealsOnView:["clef_disparue"]},
+  flute_lea:{name:"La flûte de Léa",icon:"🥂",location:"salon",fromAct:2,
+    desc:"Restée sur le buffet du salon depuis le toast. Légère trace ambrée au fond. À examiner — peut-être à faire sentir à Louis."},
+  buffet_salon:{name:"Le piano",icon:"🎹",location:"salon",fromAct:2,
+    desc:"Le piano à queue de Marie. C'est ici qu'elle a joué de 17h00 à 17h45, sous le regard de Romanette et avec Alicia qui tournait les pages."},
+  porte_manteau:{name:"Le porte-manteau du couloir",icon:"🪝",location:"couloir",fromAct:3,
+    desc:"Quelques châles et redingotes. Rien d'intéressant ici, mais ce couloir mène à tout."},
+  chambre_alicia:{name:"La chambre d'Alicia",icon:"🛏️",location:"chambres",fromAct:3,
+    desc:"Un manteau déplacé sur une chaise, un tiroir entrouvert. Quelqu'un est passé en vitesse. Aucune clef sur place — elle doit être cousue dans la doublure du manteau d'Alicia, au bar."},
+  mallette_gautier:{name:"La mallette de Gautier",icon:"💼",location:"placard",fromAct:3,
+    desc:"Cuir noir, dissimulée sous une pile de draps. Lourde. Gautier la porte sous sa redingote, vous l'avez vue. Elle est restée là.",
+    interactive:[{label:"Ouvrir la mallette (Amaury vous prête un passe)",gives:"contenu_mallette"}]},
+  contenu_mallette:{name:"Contenu de la mallette",icon:"📑",
+    desc:"Trois éléments à l'intérieur : une liasse de billets neufs, un plan dessiné à la main, et une note manuscrite.",
+    interactive:[
+      {label:"Saisir le plan",gives:"plan_domaine"},
+      {label:"Saisir la note",gives:"note_rendezvous"},
+      {label:"Compter l'argent",gives:"argent_mallette"}
+    ]},
+  plan_domaine:{name:"Plan du Domaine",icon:"🗺️",
+    desc:"Plan dessiné à la main. La dépendance est entourée d'un trait épais à l'encre brune."},
+  note_rendezvous:{name:"Note de rendez-vous",icon:"✉️",
+    desc:"Petit billet plié.",
+    text:"6 juin, 17h30, dépendance — apporter la totalité. — L."},
+  argent_mallette:{name:"5 000 livres en liquide",icon:"💰",
+    desc:"Petites coupures, neuves. Préparées pour un paiement."},
+  corps_lea:{name:"Léa, allongée",icon:"⚰️",location:"dependance",fromAct:4,
+    desc:"Sous un drap. Visage pâle, mains relâchées, pas de blessure. Empoisonnement confirmé. Une tasse de thé renversée à ses pieds."},
+  tasse_the:{name:"Tasse de thé renversée",icon:"☕",location:"dependance",fromAct:4,
+    desc:"Léa buvait quand son cœur a flanché. L'odeur est ténue mais reconnaissable — celle de la flûte du toast."},
+  paquet_alicia:{name:"Paquet « N. → Alicia »",icon:"💌",location:"dependance",fromAct:4,
+    desc:"22 lettres tendres signées « N. », adressées à Alicia il y a un an. Ruban de soie rose."},
+  paquet_marie:{name:"Paquet « Marie » (par Léa)",icon:"💌",location:"dependance",fromAct:4,
+    desc:"3 ou 4 lettres dans une boîte de papier japonais. Écriture de Léa, adressées à Marie. Mots tendres."},
+  carnet_lea:{name:"Carnet codé de Léa",icon:"📓",location:"dependance",fromAct:4,
+    desc:"Carnet à couverture sombre. Deux pages vous arrêtent.",
+    text:"GRILLE — A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8 I=9 / J→1 K→2 L→3 M→4 N→5 O→6 P→7 Q→8 R→9 S→1 T→2 U→3 V→4 W→5 X→6 Y→7 Z→8\n« Pour mes cadenas et mes coffres, j'utilise les initiales du nom et je convertis chaque lettre en un seul chiffre. — L. »\n\nMon carnet des affaires :\nL.R. — Gautier — 5✦1✦7 (500 livres) ✓ payé\nG.L. — Louis-Marc — 5✦0 (5 000 livres) en attente — rdv 17h30\nN.P. — Plumeau — 2✦7 (200 livres) ✓ payé\nT.P. — Vienne — 1✦5 (1 500 livres) en attente\nC.C. — mardi — 1✦0 (1 000 livres) en attente\nB.M. — Tatoine — 2✦0 (par trim.) ✓ régulier\nM.R. — potager — non, garder le silence\n\n★ A.G.L. — VRAI NOM — coffret ★",
+    revealsOnView:["carnet_lu","plumeau_indice","clochette_jeu"]},
+  notes_recherche:{name:"Notes de recherche de Léa",icon:"📝",location:"dependance",fromAct:4,
+    desc:"Notes manuscrites destinées à son prochain roman.",
+    text:"Notes — projet « Les Servantes » — 5 juin\nA.G.L. : confirmée. Servante chez la maison Parisette de 1907 à 1910. Quitte le village de la Grande Leuleu à 17 ans, après la mort de la vraie demoiselle de Parisette à l'auberge. Reprend ses papiers. Vérifié auprès du registre paroissial et de deux anciens du village. Doit en parler à Théodorette dans la semaine — je ne peux plus garder ce silence. — L.",
+    revealsOnView:["agl_decodee","amandine_anomalie"]},
+  clef_dependance:{name:"Clef de la dépendance",icon:"🗝️",
+    desc:"Clef récupérée auprès d'Alicia. Elle ouvre la dépendance."}
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const State = {
+  currentAct:1,
+  currentLocation:"jardin",
+  foundObjects:new Set(),
+  inventory:new Set(),
+  revealedFacts:new Set(),
+  answeredQuestions:new Set(),
+  charactersTalked:new Set(),
+  notebook:[],
+  resolved:false,
+  notebookCounter:0
+};
+
+/* ============================================================
+   UTILS
+   ============================================================ */
+function $(s,r=document){return r.querySelector(s)}
+function $$(s,r=document){return [...r.querySelectorAll(s)]}
+function noteToBook(meta,body){
+  State.notebookCounter++;
+  State.notebook.unshift({n:State.notebookCounter,meta,body,act:State.currentAct});
+}
+function stripHTML(html){const d=document.createElement('div');d.innerHTML=html;return d.textContent||""}
+
+function isLocOpen(id){return LOCATIONS[id].fromAct<=State.currentAct}
+function isObjAvailable(id){
+  const o=OBJECTS[id];if(!o)return false;
+  if(State.foundObjects.has(id))return true;
+  if(o.fromAct && State.currentAct<o.fromAct)return false;
+  return true;
+}
+function isQAvailable(charId,q){
+  if(q.act && State.currentAct<q.act)return false;
+  if(q.requires && !q.requires.every(r=>State.inventory.has(r)||State.foundObjects.has(r)))return false;
+  if(q.requires_response && !q.requires_response.every(r=>State.revealedFacts.has(r)))return false;
+  return true;
+}
+function hasNewQuestion(charId){
+  const c=CHARACTERS[charId];
+  return c.questions.some(q=>isQAvailable(c,q) && !State.answeredQuestions.has(charId+"."+q.id) && !q.isPresentation);
+}
+
+/* ============================================================
+   FIND OBJECT
+   ============================================================ */
+function findObject(objId){
+  const wasNew=!State.foundObjects.has(objId);
+  if(wasNew){
+    State.foundObjects.add(objId);
+    if(OBJECTS[objId]){
+      State.inventory.add(objId);
+      const o=OBJECTS[objId];
+      let snippet=o.desc||"";
+      if(o.text)snippet="« "+o.text.replace(/\n/g," / ").slice(0,200)+"… »";
+      noteToBook("Trouvé : "+o.name,snippet);
+      if(o.revealsOnView)o.revealsOnView.forEach(r=>State.revealedFacts.add(r));
+    }
+  }
+  return wasNew;
+}
+
+/* ============================================================
+   RENDER SIDEBAR
+   ============================================================ */
+function renderSidebar(){
+  const list=$("#sidebar-list");
+  const chars=Object.entries(CHARACTERS).sort((a,b)=>a[1].order-b[1].order);
+  let html=`<div class="group-title">Sir Amaury</div>`;
+  chars.filter(([,c])=>c.statut==="host").forEach(([id,c])=>{
+    html+=charRow(id,c);
+  });
+  html+=`<div class="group-title">Suspects</div>`;
+  chars.filter(([,c])=>c.statut==="suspect").forEach(([id,c])=>{
+    html+=charRow(id,c);
+  });
+  html+=`<div class="group-title">Témoins</div>`;
+  chars.filter(([,c])=>["bavard","discret"].includes(c.statut)).forEach(([id,c])=>{
+    html+=charRow(id,c);
+  });
+  list.innerHTML=html;
+}
+function charRow(id,c){
+  const hasNew=hasNewQuestion(id) && State.currentAct>=1;
+  const statusLabel={suspect:"Suspect",bavard:"Bavard",discret:"Discret",host:"Votre mari"}[c.statut]||"";
+  return `<div class="char-row" onclick="talkTo('${id}')">
+    <div class="portrait ${c.statut}">${c.icon}</div>
+    <div class="info"><div class="name">${c.nickname}</div><div class="sub ${c.statut}">${statusLabel}</div></div>
+    ${hasNew?'<span class="badge-new"></span>':''}
+  </div>`;
+}
+
+/* ============================================================
+   RENDER STAGE
+   ============================================================ */
+function renderLocTabs(){
+  const tabs=$("#loc-tabs");
+  const groups={
+    "Extérieurs":["jardin","potager"],
+    "Salon & bar":["bar","salon"],
+    "La maison":["couloir","chambres","placard"],
+    "Dépendance":["dependance"]
+  };
+  let html="";
+  for(const[group,locs]of Object.entries(groups)){
+    const visibleLocs=locs.filter(l=>LOCATIONS[l].fromAct<=4);
+    if(visibleLocs.length===0)continue;
+    visibleLocs.forEach(l=>{
+      const loc=LOCATIONS[l];
+      const open=isLocOpen(l);
+      const active=State.currentLocation===l;
+      const cls="loc-btn"+(active?" active":"")+(open?"":" locked");
+      const click=open?`onclick="setLocation('${l}')"`:"";
+      html+=`<button class="${cls}" ${click}><span class="icon">${loc.icon}</span>${loc.name}</button>`;
+    });
+  }
+  tabs.innerHTML=html;
+}
+function renderScene(){
+  const loc=LOCATIONS[State.currentLocation];
+  if(!loc || !isLocOpen(State.currentLocation)){
+    $("#scene-content").innerHTML=`<div class="scene"><div class="scene-empty">Cette pièce ne vous est pas encore accessible.<br>Amaury vous l'ouvrira plus tard.</div></div>`;
+    return;
+  }
+  let html=`<div class="scene">
+    <h2><span class="icon">${loc.icon}</span>${loc.name}</h2>
+    <div class="scene-sub">Acte ${["I","II","III","IV"][State.currentAct-1]} · 18h${String((State.currentAct-1)*15).padStart(2,'0')}</div>
+    <div class="scene-desc">${loc.desc}</div>`;
+  if(loc.objects && loc.objects.length){
+    html+=`<div class="interest-points">`;
+    loc.objects.forEach(oid=>{
+      const o=OBJECTS[oid];if(!o)return;
+      const found=State.foundObjects.has(oid);
+      const avail=isObjAvailable(oid);
+      const cls="point"+(found?" found":"")+(!avail?" locked":"")+(avail&&!found?" new":"");
+      const click=avail?`onclick="openObject('${oid}')"`:"";
+      html+=`<div class="${cls}" ${click}>
+        <span class="icon">${o.icon||"📦"}</span>
+        <div class="label">${o.name}</div>
+        <div class="hint">${found?"Examiné":(avail?"Cliquez pour examiner":"À venir")}</div>
+      </div>`;
+    });
+    html+=`</div>`;
+  } else {
+    html+=`<div class="scene-empty">Rien à examiner ici — sinon les témoignages que les convives vous donneront.</div>`;
+  }
+  html+=`</div>`;
+  $("#scene-content").innerHTML=html;
+}
+function setLocation(id){
+  if(!isLocOpen(id))return;
+  State.currentLocation=id;
+  renderLocTabs();renderScene();
+}
+
+/* ============================================================
+   TOPBAR
+   ============================================================ */
+function updateTopbar(){
+  const act=ACTS[State.currentAct-1];
+  $("#act-label").textContent=act.name;
+  $("#time-label").textContent=act.time;
+}
+
+/* ============================================================
+   FLOATING COUNTS
+   ============================================================ */
+function updateFloating(){
+  $("#cnt-inv").textContent=State.inventory.size;
+  $("#cnt-note").textContent=State.notebook.length;
+}
+
+/* ============================================================
+   DIALOG (character + object)
+   ============================================================ */
+function openDlg(opts){
+  $("#dlg-title").textContent=opts.title||"";
+  $("#dlg-role").textContent=opts.role||"";
+  $("#dlg-portrait").className="portrait "+(opts.statut||"");
+  $("#dlg-portrait").textContent=opts.icon||"";
+  $("#dlg-body").innerHTML=opts.body||"";
+  $("#dlg-back").classList.add("show");
+  $("#dlg-body").scrollTop=0;
+}
+function closeDlg(){$("#dlg-back").classList.remove("show")}
+
+function talkTo(charId){
+  const c=CHARACTERS[charId];
+  State.charactersTalked.add(charId);
+  let html=`<div class="quote">${c.presentation}</div>`;
+  const ask=c.questions.filter(q=>!q.confront && isQAvailable(c,q));
+  const conf=c.questions.filter(q=>q.confront && isQAvailable(c,q));
+  const locked=c.questions.filter(q=>!isQAvailable(c,q));
+
+  html+='<div class="questions">';
+  if(ask.length){
+    html+=`<h4>Vous demandez</h4>`;
+    ask.forEach(q=>{
+      const answered=State.answeredQuestions.has(charId+"."+q.id);
+      html+=`<button class="q-btn ${answered?"answered":""}" onclick="askQ('${charId}','${q.id}')">${q.label}</button>`;
+    });
+  }
+  if(conf.length){
+    html+=`<h4 style="margin-top:18px">Vous pouvez confronter</h4>`;
+    conf.forEach(q=>{
+      const answered=State.answeredQuestions.has(charId+"."+q.id);
+      html+=`<button class="q-btn confront ${answered?"answered":""}" onclick="askQ('${charId}','${q.id}')">${q.label}</button>`;
+    });
+  }
+  if(locked.length){
+    html+=`<h4 style="margin-top:18px;color:var(--brown-soft)">Pour plus tard</h4>`;
+    locked.forEach(q=>{
+      let reason="à venir";
+      if(q.act && State.currentAct<q.act)reason=`Acte ${["I","II","III","IV"][q.act-1]}+`;
+      else if(q.requires)reason="objet manquant";
+      else if(q.requires_response)reason="info manquante";
+      html+=`<button class="q-btn" disabled>${q.label} — <i>${reason}</i></button>`;
+    });
+  }
+  html+='</div>';
+  openDlg({title:c.name,role:c.role,statut:c.statut,icon:c.icon,body:html});
+  renderSidebar();
+}
+
+function askQ(charId,qId){
+  const c=CHARACTERS[charId];
+  const q=c.questions.find(qq=>qq.id===qId);
+  if(!q)return;
+  State.answeredQuestions.add(charId+"."+q.id);
+  if(q.reveals)q.reveals.forEach(r=>State.revealedFacts.add(r));
+  if(q.givesItem){
+    State.inventory.add(q.givesItem);
+    State.foundObjects.add(q.givesItem);
+    noteToBook("Obtenu : "+OBJECTS[q.givesItem].name,"Donné par "+c.nickname);
+  }
+  if(q.endGame){State.resolved=true}
+  // notebook
+  if(!q.isPresentation){
+    noteToBook(c.nickname+" — "+q.label,stripHTML(q.response).slice(0,260)+(q.response.length>260?"…":""));
+  }
+
+  let body=`<p style="font-size:12px;color:var(--brown-soft);text-transform:uppercase;letter-spacing:1px;margin:0 0 4px">Vous demandez :</p>
+  <p style="font-style:italic;margin:0 0 14px;color:var(--brown)">${q.label}</p>
+  <div style="border-top:1px solid rgba(120,80,50,.15);padding-top:14px"></div>`;
+  if(q.isPresentation){
+    body+=`<div class="quote">${c.presentation}</div>`;
+  } else {
+    body+=`<div class="quote">${q.response}</div>`;
+  }
+  if(q.givesItem){
+    body+=`<p style="text-align:center;color:var(--gold);font-weight:600;margin-top:14px">★ Vous obtenez : ${OBJECTS[q.givesItem].name}</p>`;
+  }
+  if(q.endGame){
+    body+=`<div class="success-card"><h3>★ La vérité éclate ★</h3>
+      <p style="text-align:center;color:var(--brown);line-height:1.7">
+      Lady Amandinette de Parisette — née Amandine de la Grande Leuleu, ancienne servante chez les vrais Parisette — a tué Léa pour préserver son imposture. Théodorette est dévasté. Le jardin se tait. Vous avez résolu l'affaire.</p>
+      <p style="margin-top:14px"><b>Drames parallèles révélés :</b></p>
+      <p style="font-size:14px;color:var(--brown-2);text-align:left;padding:0 14px">
+      • <b>Théodorette</b> : chantage Vienne. Couvrait Amandinette par instinct.<br>
+      • <b>Louis-Marc ⟷ Gautier</b> : liaison de 5 ans. Chantage.<br>
+      • <b>Marie</b> : amante de Léa.<br>
+      • <b>Nicolas (Plumeau) / Romanette</b> : fiancés secrets.<br>
+      • <b>Alicia ⟷ Nicolas</b> : liaison passée, lettres confiées à Léa.<br>
+      • <b>Clochette</b> : dettes de jeu.<br>
+      • <b>Boulet ⟷ Tatoine</b> : lettres anciennes.
+      </p></div>`;
+  } else {
+    body+=`<div style="margin-top:14px;text-align:right"><button class="q-btn" style="display:inline-block;width:auto" onclick="talkTo('${charId}')">Continuer</button></div>`;
+  }
+  openDlg({title:c.name,role:c.role,statut:c.statut,icon:c.icon,body});
+  renderAll();
+}
+
+function openObject(objId){
+  const o=OBJECTS[objId];if(!o)return;
+  const wasNew=findObject(objId);
+  let html=`<p style="font-style:italic;color:var(--brown-2);line-height:1.6">${o.desc||""}</p>`;
+  if(o.text){
+    html+=`<div class="text-card${o.burnt?" burnt":""}">${o.text}</div>`;
+  }
+  if(o.isCode && !State.foundObjects.has("__opened_"+objId)){
+    html+=`<div class="code-box">
+      <p style="margin:0 0 8px">Composez le code à 3 chiffres :</p>
+      <input id="codeinput" maxlength="3" inputmode="numeric" placeholder="•••">
+      <button onclick="tryCode('${objId}')">Ouvrir</button>
+      <div class="hint">Léa avait pour méthode de convertir les <i>initiales d'un nom</i> en chiffres, via une grille qu'elle gardait dans son atelier.</div>
+      <div id="code-feedback"></div>
+    </div>`;
+  }
+  if(o.interactive){
+    html+='<div style="margin-top:14px">';
+    o.interactive.forEach(i=>{
+      const gives=i.gives;
+      const already=gives && State.foundObjects.has(gives);
+      const reqMet=!i.requires_response || i.requires_response.every(r=>State.revealedFacts.has(r));
+      if(!reqMet){
+        html+=`<button class="q-btn" disabled>${i.label}</button>`;
+      } else if(already){
+        html+=`<button class="q-btn answered">${i.label}</button>`;
+      } else {
+        html+=`<button class="q-btn" onclick='doInteract("${objId}","${gives}")'>${i.label}</button>`;
+      }
+    });
+    html+='</div>';
+  }
+  if(o.location){
+    html+=`<p style="margin-top:14px;font-size:13px;color:var(--brown-soft);text-align:right">📍 ${LOCATIONS[o.location]?LOCATIONS[o.location].name:o.location}</p>`;
+  }
+  openDlg({title:o.name,role:o.location?LOCATIONS[o.location]?.name||"":"",icon:o.icon,body:html});
+  renderAll();
+}
+
+function doInteract(objId,gives){
+  const wasNew=findObject(gives);
+  setTimeout(()=>openObject(gives),100);
+}
+
+function tryCode(objId){
+  const o=OBJECTS[objId];
+  const input=$("#codeinput").value.trim();
+  const fb=$("#code-feedback");
+  if(input===o.code){
+    State.foundObjects.add("__opened_"+objId);
+    fb.innerHTML='<p style="color:var(--gold);font-weight:600;margin:12px 0 0;text-align:center;font-size:18px">🔓 Click. Le cadenas cède.</p>';
+    (o.onCodeSuccess||[]).forEach(g=>findObject(g));
+    noteToBook("Énigme résolue","La boîte de la malle s'ouvre. Vrai acte de naissance + lettre du 5 juin.");
+    setTimeout(()=>{openObject((o.onCodeSuccess||[])[0]);renderAll()},1300);
+  } else {
+    fb.innerHTML=`<p class="failure">${o.onCodeFail||"Mauvais code."}</p>`;
+  }
+}
+
+/* ============================================================
+   PANELS
+   ============================================================ */
+function showPanel(html){
+  $("#panel-content").innerHTML=html;
+  $("#panel").classList.add("show");
+  $("#panel-back").classList.add("show");
+}
+function closePanel(){
+  $("#panel").classList.remove("show");
+  $("#panel-back").classList.remove("show");
+}
+
+$("#btn-inventory").onclick=()=>{
+  let html=`<h2>Vos affaires</h2><p style="text-align:center;color:var(--brown-soft);font-style:italic">Tout ce que vous avez trouvé.</p>`;
+  if(State.inventory.size===0){
+    html+=`<p style="text-align:center;padding:30px;color:var(--brown-soft)">Rien encore. Fouillez les lieux ouverts.</p>`;
+  } else {
+    html+=`<div class="inventory-grid">`;
+    [...State.inventory].forEach(id=>{
+      const o=OBJECTS[id];if(!o)return;
+      html+=`<div class="inv-item" onclick="closePanel();openObject('${id}')">
+        <span class="icon">${o.icon||"📦"}</span>
+        <div class="name">${o.name}</div></div>`;
+    });
+    html+=`</div>`;
+  }
+  showPanel(html);
+};
+
+$("#btn-notebook").onclick=()=>{
+  let html=`<h2>Carnet d'enquête</h2><p style="text-align:center;color:var(--brown-soft);font-style:italic">Les notes s'inscrivent au fil de votre enquête.</p>`;
+  if(State.notebook.length===0){
+    html+=`<p style="text-align:center;padding:30px;color:var(--brown-soft)">Vous n'avez rien noté pour l'instant.</p>`;
+  } else {
+    State.notebook.forEach(e=>{
+      html+=`<div class="notebook-entry"><div class="meta">Acte ${["I","II","III","IV"][e.act-1]} · ${e.meta}</div><div class="body">${e.body}</div></div>`;
+    });
+  }
+  showPanel(html);
+};
+
+$("#btn-mj").onclick=()=>{
+  const act=State.currentAct;
+  const nextAct=ACTS[act];
+  let html=`<h2>Sir Amaury</h2><p style="text-align:center;color:var(--brown-soft);font-style:italic">Votre époux, maître du Domaine.</p>`;
+  html+=`<div class="quote">« Tu progresses bien, ma chère. Dis-moi quand tu veux que j'ouvre la pièce suivante. »</div>`;
+  html+=`<div class="mj-section">
+    <h3>Régulation de la partie</h3>
+    <div style="font-size:13px;color:var(--gold-light);margin:6px 0">Acte courant : <b>${["I","II","III","IV"][act-1]}</b> — ${ACTS[act-1].name}</div>`;
+  if(act<4){
+    html+=`<button class="mj-btn" onclick="nextAct()">Ouvrir l'Acte ${["II","III","IV"][act-1]} : ${ACTS[act].name.replace(/^Acte [IV]+ — /,'')}</button>
+    <div class="mj-hint">Déclencheur : ${["Chloé a interrogé plusieurs convives et veut voir où ils étaient au toast.","Chloé évoque des déplacements suspects à l'intérieur.","Chloé ramène la clef récupérée sur Alicia.","Tous les lieux sont ouverts."][act-1]}</div>`;
+  } else {
+    html+=`<button class="mj-btn" disabled>Tous les actes sont ouverts</button>`;
+  }
+  html+=`</div>`;
+  html+=`<div style="margin-top:18px"><button class="q-btn" onclick="closePanel();talkTo('amaury')">Parler à Amaury</button></div>`;
+  showPanel(html);
+};
+
+function nextAct(){
+  if(State.currentAct>=4)return;
+  State.currentAct++;
+  const newLocs=ACTS[State.currentAct-1].locations;
+  noteToBook("Acte avancé","Sir Amaury vient d'ouvrir : "+newLocs.map(l=>LOCATIONS[l].name).join(", "));
+  // Switch to first new location
+  State.currentLocation=newLocs[0];
+  closePanel();
+  renderAll();
+}
+
+/* ============================================================
+   RENDER ALL
+   ============================================================ */
+function renderAll(){
+  updateTopbar();
+  renderSidebar();
+  renderLocTabs();
+  renderScene();
+  updateFloating();
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+noteToBook("Arrivée au Domaine","18h00. Sir Amaury vous accueille au jardin. Léa est morte dans la dépendance. Vous avez une heure.");
+State.currentLocation="jardin";
+renderAll();
+</script>
+
+</body>
+</html>
