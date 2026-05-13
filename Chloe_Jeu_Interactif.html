@@ -652,7 +652,7 @@ const CHARACTERS = {
       {id:"silhouette",label:"Quelque chose près des manteaux à 17h36 ?",act:2,
         response:"« Je revenais de la salle de bain par le couloir vers 17h36. La porte du bar était entrouverte. J'ai aperçu quelqu'un penché sur les manteaux, glissant quelque chose dans une veste. Le rayon de soleil m'a empêchée de voir le visage. »"},
       {id:"nicolas_eclat",label:"Sur l'éclat de Nicolas ce matin ?",act:2,
-        response:"« Je l'ai entendu jurer que Léa "paierait pour ce qu'elle disait sur sa famille". Et Romanette ne le quittait pas des yeux pendant son éclat — pas comme une amie, comme une femme amoureuse. »",reveals:["plumeau_indice","fiances_nicolas_romanette"]},
+        response:"« Je l'ai entendu jurer que Léa <i>paierait pour ce qu'elle disait sur sa famille</i>. Et Romanette ne le quittait pas des yeux pendant son éclat — pas comme une amie, comme une femme amoureuse. »",reveals:["plumeau_indice","fiances_nicolas_romanette"]},
       {id:"gautier_placard",label:"Vu Gautier dans le couloir ?",act:3,
         response:"« Je passais dans le couloir intérieur vers 17h33. J'ai vu Gautier glisser quelque chose de lourd dans le placard, vivement. »"},
       {id:"alicia_bar",label:"Avez-vous vu Alicia pendant la cohue ?",act:3,
@@ -813,7 +813,7 @@ const OBJECTS = {
     revealsOnView:["carnet_lu","plumeau_indice","clochette_jeu"]},
   notes_recherche:{name:"Notes de recherche de Léa",icon:"📝",location:"dependance",fromAct:4,
     desc:"Notes manuscrites destinées à son prochain roman.",
-    text:"Notes — projet « Les Servantes » — 5 juin\nA.G.L. : confirmée. Servante chez la maison Parisette de 1907 à 1910. Quitte le village de la Grande Leuleu à 17 ans, après la mort de la vraie demoiselle de Parisette à l'auberge. Reprend ses papiers. Vérifié auprès du registre paroissial et de deux anciens du village. Doit en parler à Théodorette dans la semaine — je ne peux plus garder ce silence. — L.",
+    text:"Notes — projet « Les Servantes » — 5 juin\nA.G.L. : confirmée. Servante chez la maison Beauchamp de 1907 à 1910. À 17 ans, présente à l'auberge de la Grande Leuleu lors de la mort par fièvre d'une jeune Mademoiselle de Parisette de passage — branche éloignée de Touraine, sans descendance connue. Reprend ses papiers. Vérifié auprès du registre paroissial et de deux anciens du village. Doit en parler à Théodorette dans la semaine — je ne peux plus garder ce silence. — L.",
     revealsOnView:["agl_decodee","amandine_anomalie"]},
   clef_dependance:{name:"Clef de la dépendance",icon:"🗝️",
     desc:"Clef récupérée auprès d'Alicia. Elle ouvre la dépendance."}
@@ -1076,7 +1076,7 @@ function askQ(charId,qId){
   if(q.endGame){
     body+=`<div class="success-card"><h3>★ La vérité éclate ★</h3>
       <p style="text-align:center;color:var(--brown);line-height:1.7">
-      Lady Amandinette de Parisette — née Amandine de la Grande Leuleu, ancienne servante chez les vrais Parisette — a tué Léa pour préserver son imposture. Théodorette est dévasté. Le jardin se tait. Vous avez résolu l'affaire.</p>
+      Lady Amandinette de Parisette — née Amandine de la Grande Leuleu, ancienne servante chez les Beauchamp, usurpe l’identité de sa maîtresse Mademoiselle Amandinette de Beauchamp morte d’une fièvre — vole sa carte d’invitation au bal Parisette et une de ses robes, y rencontre Théodorette et l’épouse — a tué Léa pour préserver son imposture. Théodorette est dévasté. Le jardin se tait. Vous avez résolu l'affaire.</p>
       <p style="margin-top:14px"><b>Drames parallèles révélés :</b></p>
       <p style="font-size:14px;color:var(--brown-2);text-align:left;padding:0 14px">
       • <b>Théodorette</b> : chantage Vienne. Couvrait Amandinette par instinct.<br>
