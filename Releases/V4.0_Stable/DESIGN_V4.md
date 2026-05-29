@@ -74,7 +74,7 @@ Léa n'était pas qu'une maître-chanteuse : elle régnait sur un petit **cercle
 ### Mademoiselle Maëlys Bouchard
 - **Caractère** : ingénue douce, observatrice, loyale. L'âme pure.
 - **Identité publique** : jeune demoiselle invitée par Chloé (protégée récente).
-- **Identité secrète (qu'elle ignore)** : Marguerite Beauchamp, nièce de la vraie Mademoiselle Amandinette de Beauchamp morte en 1910 ; héritière dépossédée, élevée sous le nom Bouchard.
+- **Identité secrète (qu'elle ignore)** : Camille Beauchamp, nièce de la vraie Mademoiselle Amandinette de Beauchamp morte en 1910 ; héritière dépossédée, élevée sous le nom Bouchard. *(Prénom « Camille » — pas « Marguerite » — pour éviter la collision avec le 2ᵉ prénom de la coupable, « Amandine Marguerite de la Grande Leuleu ».)*
 - **Pourquoi elle est là** : Léa l'a fait inviter (lettre à Amaury, il y a 3 mois) pour réparer avant sa fuite.
 - **Non chantée.** Léa la protégeait.
 - **Témoignages PIVOT** : Théodorette 17h20 (couloir), toast « parler seules », Marie 16h55, Gautier 17h33, Alicia 18h05 ; Marie joue faux / Alicia distraite.

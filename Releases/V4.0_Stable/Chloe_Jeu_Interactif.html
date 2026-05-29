@@ -584,7 +584,7 @@ const CHARACTERS = {
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"alibi",label:"Où étiez-vous entre 17h00 et 17h45 ?",act:1,
-        response:"« Au piano. Alicia tournait les pages. Maëlys tournait les feuillets à côté. Lady Boulet de Myrtilles est passée vers 17h30. »"},
+        response:"« Au piano. Alicia tournait les pages. Maëlys lisait à côté. Lady Boulet de Myrtilles est passée vers 17h30. »"},
       {id:"couloir",label:"Avez-vous vu quelqu'un traverser ?",act:2,
         response:"« Du coin de l'œil, j'ai vu quelqu'un traverser le couloir vers 17h13-17h15, en direction du jardin. Je n'ai pas reconnu — j'étais sur un passage difficile. »"},
       {id:"croire",label:"Qui aurait pu vouloir tuer Léa ?",act:2,
@@ -676,6 +676,8 @@ const CHARACTERS = {
         response:"« J'ai entendu la Duchesse Amandinette glisser à Léa : <i>Nous devons parler. Seules. Tout de suite après.</i> Léa a hoché la tête sans rien dire. »",reveals:["amandinette_toast"]},
       {id:"piano",label:"Marie a-t-elle joué bizarrement ?",act:2,
         response:"« Marie a fait trois fausses notes — chose impensable chez elle. Et Alicia regardait par la fenêtre toutes les deux mesures. »"},
+      {id:"lisa_salon",label:"Lisa était-elle vraiment au salon ?",act:2,
+        response:"« Oui. Elle n'a pas quitté son fauteuil près du piano de tout l'après-midi. Elle ruminait après son éclat, mais elle était là, sous nos yeux. »",reveals:["lisa_alibi_confirme"]},
       {id:"lea_douceur",label:"Léa s'est-elle adressée à vous ?",act:2,
         response:"« Oui, à mon arrivée. Elle m'a dit une chose étrange : <i>Vous ressemblez tant à quelqu'un que j'ai connu…</i> Et ses yeux se sont mouillés. Je n'ai pas compris. »",reveals:["maelys_lea_douceur"]}
     ]},
@@ -789,7 +791,7 @@ const OBJECTS = {
     text:"Les Beuhaies, le 5 juin — au crépuscule\n\nChère Amandine,\n\nVoici six longs mois que je tergiverse — six mois que je remets à demain ce qui devrait être dit dès l'aube. Mes nuits, vois-tu, s'en lassent.\n\nThéodorette est un homme d'honneur ; il mérite de connaître la femme qu'il aime — et non l'autre, celle qui en porte le nom comme un châle qui ne lui appartient pas. Je lui parlerai ce week-end, à la soirée de Chloé. Une phrase, un regard suffira.\n\nPour vous, c'est la fin du jeu. Pour moi aussi, mais d'une autre manière : je traverserai l'Atlantique le vendredi suivant, et plus jamais vous n'entendrez parler de moi.\n\n— L."},
   note_maelys:{name:"Note scellée — pour Maëlys",icon:"✉️",
     desc:"Une enveloppe scellée à la cire, au nom de Mademoiselle Maëlys Bouchard.",
-    text:"Mademoiselle,\n\nVous ne vous appelez pas Bouchard. Vous êtes Marguerite Beauchamp, nièce de la véritable Amandinette de Beauchamp — l'héritière morte d'une fièvre en mai 1910. On vous a pris votre nom et votre bien en même temps qu'on volait son identité.\n\nJe n'ai pas su réparer toutes mes fautes ; je peux au moins réparer celle-ci. Sachez qui vous êtes.\n\n— L.",
+    text:"Mademoiselle,\n\nVous ne vous appelez pas Bouchard. Vous êtes Camille Beauchamp, nièce de la véritable Amandinette de Beauchamp — l'héritière morte d'une fièvre en mai 1910. On vous a pris votre nom et votre bien en même temps qu'on volait son identité.\n\nJe n'ai pas su réparer toutes mes fautes ; je peux au moins réparer celle-ci. Sachez qui vous êtes.\n\n— L.",
     revealsOnView:["maelys_beauchamp"]},
   potager_trace:{name:"Le coin discret",icon:"🌿",location:"potager",fromAct:1,
     desc:"Derrière les framboisiers, l'herbe est foulée. Deux paires d'empreintes de talons, face à face. Aucun objet, mais l'endroit raconte qu'on s'y est retrouvé."},
@@ -1117,7 +1119,7 @@ function askQ(charId,qId){
     body+=`<div class="success-card"><h3>★ La vérité éclate ★</h3>
       <p style="text-align:center;color:var(--brown);line-height:1.7">
       Lady Amandinette de Parisette — née Amandine de la Grande Leuleu, ancienne servante chez les Beauchamp, usurpe l’identité de sa maîtresse Mademoiselle Amandinette de Beauchamp morte d’une fièvre — vole sa carte d’invitation au bal Parisette et une de ses robes, y rencontre Théodorette et l’épouse — a tué Léa pour préserver son imposture. Théodorette est dévasté. Le jardin se tait. Vous avez résolu l'affaire.</p>
-      <p style="text-align:center;color:var(--brown-2);font-size:14px;line-height:1.6;margin-top:8px">Et le coffret a livré une dernière vérité : la jeune Maëlys est <b>Marguerite Beauchamp</b>, l'héritière dépossédée que Léa voulait rétablir ; sommé d'authentifier l'acte, le notaire <b>Emilien</b> a avoué la fraude de 1910.</p>
+      <p style="text-align:center;color:var(--brown-2);font-size:14px;line-height:1.6;margin-top:8px">Et le coffret a livré une dernière vérité : la jeune Maëlys est <b>Camille Beauchamp</b>, l'héritière dépossédée que Léa voulait rétablir ; sommé d'authentifier l'acte, le notaire <b>Emilien</b> a avoué la fraude de 1910.</p>
       <p style="margin-top:14px"><b>Drames parallèles révélés :</b></p>
       <p style="font-size:14px;color:var(--brown-2);text-align:left;padding:0 14px">
       • <b>Théodorette</b> : chantage Vienne. Couvrait Amandinette par instinct.<br>
@@ -1127,7 +1129,7 @@ function askQ(charId,qId){
       • <b>Lisa</b> : cantatrice, ex-amante de Léa et amante de Baptiste. Origines modestes cachées (fausse piste).<br>
       • <b>Alicia ⟷ Baptiste</b> : liaison passée, lettres « B. » confiées à Léa.<br>
       • <b>Emilien</b> : notaire, faussaire complice de l'imposture de 1910 (chantage 5 000 £).<br>
-      • <b>Maëlys</b> : en réalité Marguerite Beauchamp, l'héritière dépossédée — que Léa voulait rétablir.<br>
+      • <b>Maëlys</b> : en réalité Camille Beauchamp, l'héritière dépossédée — que Léa voulait rétablir.<br>
       • <b>Clochette</b> : dettes de jeu.<br>
       • <b>Boulet ⟷ Tatoine</b> : lettres anciennes.
       </p></div>`;
