@@ -200,7 +200,7 @@ Contenu exact :
 Notes — projet de roman
 « Les Servantes »
 — 5 juin —
-A.G.L. : confirmée.
+A.G.L. — Amandine de la Grande Leuleu, dite Amandinette — confirmée.
 Servante chez les Beauchamp de 1907 à 1910.
 Au service de Mademoiselle Amandinette de Beauchamp, l’héritière de la famille, qui partageait son prénom.
 Cette dernière morte d’une fièvre en mai 1910 — seule la servante était à son chevet.
