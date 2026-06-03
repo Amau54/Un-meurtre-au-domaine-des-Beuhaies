@@ -37,25 +37,27 @@ Phrase type :
 
 ---
 
-## 4. Le texte : le point critique
+## 4. Le texte : l'IA écrit TOUT (rendu direct, manuscrit nuancé)
 
-Les IA déforment le texte long. Deux méthodes :
+L'approche par défaut est désormais : **l'IA écrit elle-même le texte** comme s'il était tracé à la main par le personnage qui l'a rédigé, dans le style d'époque. Le texte exact (verbatim) est fourni dans chaque prompt — l'IA le « calligraphie » sur la feuille.
 
-**Méthode A — rendu direct (texte court : étiquette, billet de quelques lignes).**
-Donne le texte exact dans le prompt, en français, entre guillemets. Vérifie chaque mot sur l'image. Si une lettre est fausse, relance ou édite (« corrige le mot X »).
+**Quatre « mains » à distinguer** *(détails complets dans `PROMPTS_OBJETS.md` → Clé des écritures)* :
 
-**Méthode B — fond IA + texte tapé (RECOMMANDÉ pour les documents denses : acte de naissance, lettres longues, journal, grille, registre).**
-1. Demande à l'IA **uniquement le fond/cadre** : papier vieilli, en-tête décoratif, filets, sceau dessiné, **sans le texte** (ou avec un faux texte gris en repère).
-2. Récupère l'image, place-la en **fond** dans Word / Google Docs / Canva (format page A4).
-3. **Tape le texte réel** par-dessus (verbatim fourni pour chaque objet), dans une police d'époque.
-4. Exporte en **PDF A4** → imprime.
+- **✍️ Main de Léa** *(la plupart des billets, lettres, carnet, registre, notes — 1925)* : cursive féminine élégante à la plume anglaise, encre brun-noir, légèrement penchée à droite, jambages déliés, signature « — L. » ou « — Léa ».
+- **✍️ Main de Baptiste** *(uniquement la lettre 11 à Alicia)* : cursive masculine, plume, brun-noir, **plus serrée et un peu plus angulaire** que celle de Léa, signature « — B. ».
+- **✍️ Clerc de mairie 1893** *(uniquement l'acte de naissance 03)* : structure **imprimée à la typographie au plomb fin XIXe** + **mentions manuscrites du clerc** (ronde administrative, pleins/déliés marqués).
+- **🏷️ Apothicaire 1925** *(uniquement l'étiquette 05)* : **petites capitales imprimées** + une seule **ligne manuscrite** finale (signature du médecin).
 
-> La méthode B garantit un texte **parfaitement lisible et sans faute** : c'est elle qu'il faut pour tout document qu'on doit pouvoir lire en jeu.
+**Pour chaque prompt :**
+1. Cite la *Clé* (« dans la *Main de Léa* », etc.).
+2. Donne le texte verbatim « à rendre tel quel, sans faute ».
+3. Précise : *« document à plat, vue de face, type scan A4 prêt à imprimer ; pas de photo, pas de 3D, pas de décor, pas d'ombre »*.
+4. **Vérifie chaque mot** sur l'image. Si l'IA déforme un mot, demande la correction ciblée (« corrige le mot X en Y, sans toucher au reste »).
 
-**Polices d'époque conseillées** (gratuites, Google Fonts) :
-- Manuscrit (lettres) : *Petit Formal Script*, *Tangerine*, *Mrs Saint Delafield*.
-- Documents officiels / titres : *IM Fell English*, *EB Garamond*, *Cormorant*.
-- Étiquettes / capitales : *IM Fell English SC*, *Cinzel*.
+**Méthode B (fallback)** — si malgré plusieurs essais l'IA bafouille sur un texte long, repli :
+1. Demande seulement le **fond + en-tête + filets** (papier vieilli, sans texte).
+2. Tape le verbatim par-dessus dans Word / Google Docs / Canva, dans une police manuscrite d'époque (*Petit Formal Script*, *Tangerine*, *Mrs Saint Delafield*) ou typo officielle (*IM Fell English*, *EB Garamond*).
+3. Exporte en PDF A4.
 
 ---
 
