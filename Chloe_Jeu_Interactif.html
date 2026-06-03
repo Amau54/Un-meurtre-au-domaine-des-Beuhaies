@@ -496,7 +496,7 @@ const LOCATIONS = {
     objects:["potager_trace"]},
   bar:{name:"Le bar",icon:"🍷",fromAct:2,
     desc:"Tabourets de cuir, manteaux et redingotes posés sur les dossiers. Le buffet sombre, à droite, avec son tiroir où Amaury garde habituellement la clef de la dépendance.",
-    objects:["manteau_nicolas","manteau_theo","manteau_alicia","tiroir_buffet"]},
+    objects:["manteau_baptiste","manteau_theo","manteau_alicia","tiroir_buffet"]},
   salon:{name:"Le salon du bar",icon:"🛋️",fromAct:2,
     desc:"La grande pièce où le toast a eu lieu. Le piano à droite, les fauteuils près de la baie, le buffet où trône encore la flûte de Léa, intacte depuis 16h45.",
     objects:["flute_lea","buffet_salon"]},
@@ -527,6 +527,7 @@ const CHARACTERS = {
     ]},
   amandinette:{name:"Lady Amandinette de Parisette",nickname:"Amandinette",role:"Duchesse, épouse du Duc Théodorette",statut:"suspect",icon:"👑",order:1,
     presentation:"« Duchesse Amandinette de Parisette. Épouse du Duc. Léa était mon amie d'enfance, sa mort me bouleverse. »",
+    tenue:"Longue robe bleu ciel entièrement semée de fleurs, col carré, boutons de nacre, jupe à volant.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"alibi",label:"Où étiez-vous cet après-midi ?",act:1,
@@ -552,8 +553,8 @@ const CHARACTERS = {
       {id:"alibi",label:"Où étiez-vous entre 17h00 et 17h45 ?",act:1,
         response:"« J'étais avec Amandinette à la salle de bain, de 17h00 à 17h45. Elle avait une migraine. »"},
       {id:"toast",label:"Avez-vous remarqué quelque chose au toast ?",act:1,
-        response:"« Amandinette et Léa étaient côte à côte. Amandinette a eu un léger faux pas, s'est rattrapée à la coupe de Léa. Léa a ri. Sans conséquence. »"},
-      {id:"romanette_couloir",label:"Lady Romanette vous a vu rentrer du couloir à 17h20, bouleversé.",act:3,requires_response:["theo_couloir_1720"],confront:true,
+        response:"« Amandinette et Léa étaient côte à côte. Amandinette a eu un léger faux pas, s'est rattrapée à la coupe de Léa. Léa a ri. Sans conséquence. »<p class='narration'>(Recoupez : si le poison a été ingéré au toast, celle qui tenait le verre de Léa à cet instant mérite votre attention…)</p>",reveals:["fauxpas_toast"]},
+      {id:"maelys_couloir",label:"Mademoiselle Maëlys vous a vu rentrer du couloir à 17h20, bouleversé.",act:3,requires_response:["theo_couloir_1720"],confront:true,
         response:"<p class='narration'>Il ferme les yeux un long moment.</p><div class='quote'>« J'ai frappé à la salle de bain à 17h05, pas de réponse. Je suis sorti chercher Amandinette au jardin de 17h15 à 17h20. Je ne l'ai pas trouvée. Pardonnez mon mensonge — j'ai voulu la protéger. »</div>",reveals:["theo_alibi_brise"]},
       {id:"vienne",label:"Brandir la lettre de chantage trouvée dans votre manteau",act:2,requires:["lettre_vienne"],confront:true,
         response:"<p class='narration'>Sa main tremble.</p><div class='quote'>« Léa savait. Pour Vienne. Elle me faisait chanter. Mille cinq cents livres. Je n'avais pas encore payé. Mais je ne l'ai pas tuée. Je vous le jure. »</div>",reveals:["vienne_avoue"]},
@@ -584,11 +585,11 @@ const CHARACTERS = {
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"alibi",label:"Où étiez-vous entre 17h00 et 17h45 ?",act:1,
-        response:"« Au piano. Alicia tournait les pages. Romanette lisait à côté. Lady Boulet de Myrtilles est passée vers 17h30. »"},
+        response:"« Au piano. Alicia tournait les pages. Maëlys, en robe de tulle vert, lisait à côté. Lady Boulet de Myrtilles est passée vers 17h30. »"},
       {id:"couloir",label:"Avez-vous vu quelqu'un traverser ?",act:2,
-        response:"« Du coin de l'œil, j'ai vu quelqu'un traverser le couloir vers 17h15-17h17, en direction du jardin. Je n'ai pas reconnu — j'étais sur un passage difficile. »"},
+        response:"« Du coin de l'œil, j'ai vu quelqu'un traverser le couloir vers 17h13-17h15, en direction du jardin. Je n'ai pas reconnu — j'étais sur un passage difficile. »"},
       {id:"croire",label:"Qui aurait pu vouloir tuer Léa ?",act:2,
-        response:"<p>Sa voix baisse, presque un souffle.</p><div class='quote'>« Amandinette la regardait d'une drôle de façon, froide. Et juste avant le toast, je l'ai entendue dire à Léa : <i>Nous devons parler. Seules.</i>… »</div><div class='quote'>« Nicolas l'avait haïe ouvertement ce matin. »</div><div class='quote'>« Gautier avait l'air d'un homme aux abois. »</div><div class='quote'>« Clochette était bizarrement nerveuse pendant le toast. »</div>"},
+        response:"<p>Sa voix baisse, presque un souffle.</p><div class='quote'>« Amandinette la regardait d'une drôle de façon, froide. Et juste avant le toast, je l'ai entendue dire à Léa : <i>Nous devons parler. Seules.</i>… »</div><div class='quote'>« Lisa lui a fait une scène en public ce matin — une jalousie à fleur de peau. »</div><div class='quote'>« Gautier avait l'air d'un homme aux abois. »</div><div class='quote'>« Clochette était bizarrement nerveuse pendant le toast. »</div>"},
       {id:"potager",label:"Victoria vous a vue au potager avec Léa à 16h50.",act:2,confront:true,
         response:"« Une amie d'enfance qui m'embrasse, ce n'est rien. »",reveals:["marie_nie_potager"]},
       {id:"insister_potager",label:"« Ce n'est rien ? J'ai du mal à vous croire. »",act:2,requires_response:["marie_nie_potager"],confront:true,
@@ -616,32 +617,31 @@ const CHARACTERS = {
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"alibi",label:"Où étiez-vous entre 17h00 et 17h45 ?",act:1,
-        response:"« Au piano. Je tournais les pages pour Marie. Marie et Lady Romanette peuvent confirmer. »"},
+        response:"« Au piano. Je tournais les pages pour Marie. Marie et Mademoiselle Maëlys peuvent confirmer. »"},
       {id:"absence",label:"Vous vous êtes absentée brièvement ?",act:1,
         response:"« Cinq minutes à la salle de bain juste avant le toast. Lady Boulet de Myrtilles m'a vue revenir. »"},
       {id:"gautier",label:"Que dites-vous de votre mari aujourd'hui ?",act:2,
         response:"« Mon mari est inquiet depuis ce matin. Il a regardé sa montre cinq fois pendant le toast. Il est sorti précipitamment vers 17h10 avec sa mallette serrée sous le bras. Il est rentré pâle vers 17h33. »"},
       {id:"bar_1758",label:"Lady Victoria vous a vue entrer au bar à 17h58.",act:3,requires_response:["alicia_bar_1758"],confront:true,
         response:"« Oui, j'ai pris la clef. Je voulais protéger Gautier — j'avais peur qu'il ait fait une bêtise. C'est tout. »",reveals:["alicia_premier_aveu"]},
-      {id:"insister",label:"« Vraiment ? Et Nicolas ? »",act:3,requires_response:["alicia_premier_aveu"],confront:true,
-        response:"<p class='narration'>Le visage d'Alicia se décompose.</p><div class='quote'>« La vérité… Léa gardait pour moi des lettres avec Nicolas. Il y a un an. Je ne pouvais pas les avoir chez moi — Gautier les aurait trouvées et m'aurait ruinée. Quand Léa est morte, j'ai paniqué. Je voulais entrer dans la dépendance avant vous, récupérer mes lettres. J'ai pris la clef. C'est tout. Je n'ai pas tué Léa. »</div><p class='narration'>Elle tend la clef. Vous la prenez.</p>",reveals:["clef_dependance_obtenue"],givesItem:"clef_dependance"}
+      {id:"insister",label:"« Vraiment ? Et Baptiste ? »",act:3,requires_response:["alicia_premier_aveu"],confront:true,
+        response:"<p class='narration'>Le visage d'Alicia se décompose.</p><div class='quote'>« La vérité… Léa gardait pour moi des lettres avec Baptiste. Il y a un an. Je ne pouvais pas les avoir chez moi — Gautier les aurait trouvées et m'aurait ruinée. Quand Léa est morte, j'ai paniqué. Je voulais entrer dans la dépendance avant vous, récupérer mes lettres. J'ai pris la clef. C'est tout. Je n'ai pas tué Léa. »</div><p class='narration'>Elle tend la clef. Vous la prenez.</p>",reveals:["clef_dependance_obtenue"],givesItem:"clef_dependance"}
     ]},
-  nicolas:{name:"Lord Nicolas de Picolas",nickname:"Nicolas",role:"polémiste, fiancé secret de Romanette",statut:"suspect",icon:"🪶",order:7,
-    presentation:"« Lord Nicolas de Picolas, plumitif. Bien connu de cette maison. »",
+  baptiste:{name:"Monsieur Baptiste André",nickname:"Baptiste",role:"caricaturiste, secrètement M. Plumeau",statut:"suspect",icon:"🪶",order:7,
+    presentation:"« Baptiste André. Je dessine. On me tolère dans les salons tant que mes caricatures visent les autres. »",
+    tenue:"Redingote de velours vert profond brodée d'or, gilet de brocart crème, jabot et manchettes de dentelle.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
-      {id:"eclat",label:"Cet éclat avec Léa à 16h40 ?",act:1,
-        response:"« Oui, j'ai pété un câble contre cette commère. J'ai dit qu'elle ne publierait pas une ligne de plus. Elle allait écrire sur ma famille. »"},
       {id:"alibi",label:"Où étiez-vous entre 16h50 et 17h45 ?",act:1,
-        response:"« De 16h50 à 17h15 : lisière de forêt, seul. De 17h15 à 17h25 : lisière de forêt, seul. De 17h25 à 17h45 : avec Sir Tatoine à la lisière. »"},
+        response:"« De 16h50 à 17h25 : seul à la lisière de forêt, à croquer les arbres. De 17h25 à 17h45 : avec Sir Tatoine, qui fumait. »"},
       {id:"louis_banc",label:"Avez-vous vu Louis ?",act:1,
-        response:"« Pendant que je prenais l'air à la lisière de forêt vers 17h00-17h15, j'apercevais Louis sur le banc. Il sortait quelque chose de sa poche, gestes nerveux. C'était louche. »"},
+        response:"« Depuis la lisière, vers 17h00-17h15, j'apercevais Lord Louis au banc. Il sortait un papier, le passait à la flamme, gestes nerveux. J'ai cru qu'il brûlait une lettre. »"},
       {id:"fiole",label:"Cette fiole vide dans votre manteau.",act:2,requires:["fiole_digitaline"],confront:true,
-        response:"« Je n'ai jamais vu cette fiole ! Quelqu'un l'a glissée ! À cette heure-là, Gautier rentrait du jardin l'air d'un homme qui revenait d'un mauvais coup. »"},
+        response:"« Je n'ai JAMAIS vu cette fiole ! On me l'a glissée ! À cette heure-là, Lord Gautier rentrait du jardin l'air d'un homme qui revenait d'un mauvais coup. Demandez à Sir Tatoine où j'étais. »"},
       {id:"plumeau",label:"Vous êtes M. Plumeau.",act:3,requires_response:["plumeau_indice"],confront:true,
-        response:"<div class='quote'>« Oui. C'est moi. Léa m'aurait démasqué. On ne tue pas pour une plume. »</div>",reveals:["plumeau_avoue"]},
-      {id:"alicia_lettres",label:"Et ces lettres avec Lady Alicia ?",act:4,requires:["paquet_alicia"],confront:true,
-        response:"<div class='quote'>« Il y a un an. C'était bref. Nous avons rompu avant Romanette. J'avais cru à mille choses, je n'en regrette qu'une. »</div>"}
+        response:"<div class='quote'>« Oui. M. Plumeau, c'est moi. Léa allait me jeter en pâture. On ne tue pas pour une plume. »</div>",reveals:["plumeau_avoue"]},
+      {id:"alicia_lettres",label:"Et ces lettres signées « B. » avec Lady Alicia ?",act:4,requires:["paquet_alicia"],confront:true,
+        response:"<div class='quote'>« Il y a un an. C'était court. Avant Lisa. Si Lisa l'apprend… ne le lui dites pas comme ça, je vous en supplie. »</div>"}
     ]},
   boulet:{name:"Lady Boulet de Myrtilles",nickname:"Boulet",role:"lectrice d'annuaires, discrète",statut:"bavard",icon:"📚",order:8,
     presentation:"« Lady Boulet de Myrtilles, généalogiste amateur. Je passe le plus clair de mes après-midi avec mes annuaires. »",
@@ -650,20 +650,29 @@ const CHARACTERS = {
       {id:"dispute_gautier",label:"Avez-vous vu Gautier et Léa se disputer ?",act:1,
         response:"« Depuis la fenêtre du salon du bar, vers 16h15, je les ai vus se disputer dans le jardin. Léa lui a tendu un papier, il l'a fourré dans sa poche. »"},
       {id:"silhouette",label:"Quelque chose près des manteaux à 17h36 ?",act:2,
-        response:"« Je revenais de la salle de bain par le couloir vers 17h36. La porte du bar était entrouverte. J'ai aperçu quelqu'un penché sur les manteaux, glissant quelque chose dans une veste. Le rayon de soleil m'a empêchée de voir le visage. »"},
-      {id:"nicolas_eclat",label:"Sur l'éclat de Nicolas ce matin ?",act:2,
-        response:"« Je l'ai entendu jurer que Léa <i>paierait pour ce qu'elle disait sur sa famille</i>. Et Romanette ne le quittait pas des yeux pendant son éclat — pas comme une amie, comme une femme amoureuse. »",reveals:["plumeau_indice","fiances_nicolas_romanette"]},
+        response:"« Je revenais de la salle de bain par le couloir vers 17h36. La porte du bar était entrouverte. J'ai aperçu quelqu'un penché sur les manteaux, glissant quelque chose dans une veste. Le rayon de soleil m'a empêchée de voir le visage. »",reveals:["silhouette_vue"]},
+      {id:"silhouette_fleurs",label:"Cette silhouette de 17h36 — un détail vous revient-il ?",act:4,requires_response:["silhouette_vue"],confront:true,
+        response:"<p class='narration'>Elle ferme les yeux un instant, comme pour rappeler l'image.</p><div class='quote'>« Une chose me revient, oui… La personne penchée sur les manteaux portait une <b>robe</b> — une robe de femme, j'en jurerais — toute <b>semée de fleurs</b>, de grandes fleurs sur toute l'étoffe. La couleur ? Ne me la demandez pas : je ne vois pas les couleurs, je ne les ai jamais vues. Mais ces fleurs-là, je les revois. »</div>",reveals:["silhouette_robe_fleurs"]},
+      {id:"lisa_baptiste",label:"Sur la cantatrice Lisa et le caricaturiste ?",act:2,
+        response:"« La Lepra ne quittait pas Monsieur André des yeux — superbe dans son velours vert — pas comme une amie, comme une amante. Et lui, ce caricaturiste… on murmure qu'il signe ses pamphlets d'un autre nom. M. Plumeau, peut-être. »",reveals:["plumeau_indice","lisa_baptiste_indice"]},
+      {id:"lisa_origines",label:"La cantatrice Lisa, dans vos annuaires ?",act:2,
+        response:"« La Lepra ? Mon annuaire ne ment pas : née Lepretre, fille d'une blanchisseuse de Belleville. Le nom de scène cache une enfant du lavoir. Léa, j'imagine, le savait aussi. »",reveals:["lisa_origines_indice"]},
+      {id:"emilien_terres",label:"Et Maître Collin-Stanislas ?",act:3,
+        response:"« Le notaire ? Il a racheté pour une bouchée de pain les terres des Beauchamp, en 1910, juste après la mort de leur jeune héritière. Étrange aubaine pour un simple clerc. »",reveals:["emilien_chantage_indice"]},
       {id:"gautier_placard",label:"Vu Gautier dans le couloir ?",act:3,
         response:"« Je passais dans le couloir intérieur vers 17h33. J'ai vu Gautier glisser quelque chose de lourd dans le placard, vivement. »"},
       {id:"alicia_bar",label:"Avez-vous vu Alicia pendant la cohue ?",act:3,
         response:"« Oui. À 17h58, pendant que tout le monde s'agitait, j'ai vu Alicia s'attarder près du bar. Elle paraissait perdue. »",reveals:["alicia_bar_1758"]},
+      {id:"sdb_vide",label:"La salle de bain était-elle occupée quand vous y êtes allée ?",act:3,
+        response:"« Quand je m'y suis rendue vers 17h30, la salle de bain était <b>vide</b> — personne. La Duchesse Amandinette prétend pourtant s'y être reposée jusqu'à 17h45. À 17h30, il n'y avait là âme qui vive. »",reveals:["amandinette_sdb_vide"]},
       {id:"annuaires",label:"Et la Duchesse Amandinette dans vos annuaires ?",act:2,
         response:"« Mes annuaires couvrent les Parisette sur quatre générations. Je ne retrouve pas la branche dont parle la Duchesse. Et certaines anecdotes d'enfance ne collent pas avec les chroniques. »",reveals:["amandine_anomalie"]},
       {id:"tatoine",label:"Léa savait pour vous et Tatoine ?",act:3,confront:true,
         response:"<p class='narration'>Elle ferme les yeux.</p><div class='quote'>« Il y a six ans… quelques lettres. Une promenade dans un jardin, rien de plus. Léa l'avait su par hasard. Elle me faisait payer 200 livres par trimestre. Je payais surtout pour que Clochette ne sache jamais. »</div>",reveals:["boulet_aveu"]}
     ]},
-  romanette:{name:"Lady Romanette de Burlesque",nickname:"Romanette",role:"lectrice près du piano",statut:"bavard",icon:"📖",order:9,
-    presentation:"« Lady Romanette de Burlesque, lectrice. J'aime ce coin près du piano de Lady Marie. »",
+  maelys:{name:"Mademoiselle Maëlys Bouchard",nickname:"Maëlys",role:"demoiselle, protégée de Chloé — observatrice clé",statut:"bavard",icon:"📖",order:9,
+    presentation:"« Maëlys Bouchard. Lady Chloé a eu la bonté de m'inviter. Je ne suis personne, ici — mais je vois bien des choses. »",
+    tenue:"Longue robe de tulle vert profond, épaules dénudées, buste perlé, ceinture de satin.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"vu",label:"Qu'avez-vous vu cet après-midi ?",act:1,
@@ -672,13 +681,14 @@ const CHARACTERS = {
         response:"« J'ai entendu la Duchesse Amandinette glisser à Léa : <i>Nous devons parler. Seules. Tout de suite après.</i> Léa a hoché la tête sans rien dire. »",reveals:["amandinette_toast"]},
       {id:"piano",label:"Marie a-t-elle joué bizarrement ?",act:2,
         response:"« Marie a fait trois fausses notes — chose impensable chez elle. Et Alicia regardait par la fenêtre toutes les deux mesures. »"},
-      {id:"clochette",label:"Que savez-vous de Lady Cloé Fischer ?",act:2,
-        response:"« Clochette est ma cousine éloignée. Je sais qu'elle fréquente les cercles de jeu. Je l'ai confrontée l'an dernier, elle avait juré d'arrêter. Elle a paru particulièrement nerveuse aujourd'hui. »",reveals:["clochette_jeu"]},
-      {id:"nicolas_defense",label:"La fiole dans le manteau de Nicolas, c'est lui le coupable.",act:2,confront:true,
-        response:"Elle se lève. « Nicolas n'est pas un assassin. Il était à la lisière avec Sir Tatoine. <b>Je le sais.</b> » Vous insistez du regard. « Parce qu'il est mon fiancé. Annonce le mois prochain. Je ne le laisserai pas accuser à tort. Et oui, il est M. Plumeau. Je l'aide. Léa nous faisait chanter. »",reveals:["fiances_nicolas_romanette","plumeau_indice","plumeau_avoue"]}
+      {id:"lisa_salon",label:"Lisa était-elle vraiment au salon ?",act:2,
+        response:"« Oui. Elle n'a pas quitté son fauteuil près du piano de tout l'après-midi. Elle ruminait après son éclat, mais elle était là, sous nos yeux. »",reveals:["lisa_alibi_confirme"]},
+      {id:"lea_douceur",label:"Léa s'est-elle adressée à vous ?",act:2,
+        response:"« Oui, à mon arrivée. Elle m'a dit une chose étrange : <i>Vous ressemblez tant à quelqu'un que j'ai connu…</i> Et ses yeux se sont mouillés. Je n'ai pas compris. »",reveals:["maelys_lea_douceur"]}
     ]},
   tatoine:{name:"Sir Tatoine de Crevonville",nickname:"Tatoine",role:"diplomate, époux de Clochette",statut:"bavard",icon:"🚬",order:10,
     presentation:"« Sir Tatoine de Crevonville, diplomate. Ami du Duc Théodorette. Mon épouse Clochette est près de moi. »",
+    tenue:"Redingote de brocart noir brodée d'or, gilet crème, haut jabot de dentelle, chapeau haut-de-forme, loup blanc sur le haut du visage.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"vu",label:"Qu'avez-vous vu cet après-midi ?",act:1,
@@ -691,8 +701,8 @@ const CHARACTERS = {
         response:"« Je crois qu'il est au bord de la ruine. Deux ventes immobilières discrètes ces six derniers mois. Il a refusé deux invitations à investir. »"},
       {id:"louis_double",label:"Louis, vous en pensez quoi ?",act:2,
         response:"« Un jour en ville, je l'ai aperçu avec un autre homme. Une attitude particulière. »",reveals:["louis_double_indice"]},
-      {id:"nicolas_alibi",label:"Et Nicolas ?",act:1,
-        response:"« J'étais à la lisière avec lui de 17h25 à 17h45. Nous avons fumé et parlé. »"},
+      {id:"baptiste_alibi",label:"Et Baptiste ?",act:1,
+        response:"« J'étais à la lisière avec Monsieur Baptiste André de 17h25 à 17h45. Nous avons fumé et parlé. »"},
       {id:"boulet",label:"Léa savait pour vous et Boulet ?",act:3,requires_response:["boulet_aveu"],confront:true,
         response:"« Il y a six ans… une erreur de jeunesse. Léa savait. Ne le dites pas à Clochette, je vous en prie. »"}
     ]},
@@ -704,6 +714,8 @@ const CHARACTERS = {
         response:"<p>« J'avais une vue par la baie sur le jardin :</p><p>• Tatoine fumant au jardin vers 17h05.</p><p>• Lord Gautier traverser vers 17h10, mallette sous le bras.</p><p>• Louis rentrer l'air sec vers 17h20. »</p>"},
       {id:"absences",label:"Vous-même, vous êtes-vous absentée ?",act:2,
         response:"« Deux fois : à 17h33 (salle de bain, 3 min), à 17h42 (cellier, Sir Amaury m'avait envoyée chercher une bouteille, 3 min). »"},
+      {id:"sdb_vide_c",label:"La salle de bain était-elle occupée à 17h33 ?",act:3,
+        response:"« Non — il n'y avait personne. Si la Duchesse était censée s'y reposer, je ne l'y ai pas vue. La pièce était libre. »",reveals:["amandinette_sdb_vide"]},
       {id:"amandinette",label:"Quelqu'un d'autre dans le jardin ?",act:3,
         response:"<p class='narration'>Elle hésite.</p><p>« Maintenant que vous insistez… oui. À <b>17h32</b>, j'ai vu la Duchesse Amandinette traverser le jardin, pressée. Cela m'a frappée parce qu'elle était censée se reposer. Mais je me suis dit que je m'étais trompée. »</p>",reveals:["amandinette_1732"]},
       {id:"jeu",label:"Vos absences le mardi soir…",act:3,requires_response:["clochette_jeu"],confront:true,
@@ -722,7 +734,35 @@ const CHARACTERS = {
       {id:"alicia",label:"Et après tes cris à 17h58 ?",act:3,
         response:"« Maintenant que vous me posez la question, ma chère… j'ai vu Lady Alicia entrer au bar juste après mes cris. J'avais pensé qu'elle cherchait des sels. »",reveals:["alicia_bar_1758"]},
       {id:"ragots",label:"Tes ragots sur les convives ?",act:1,
-        response:"<p>Elle se penche, ravie.</p><p>• <b>Amandinette</b> : « Étrange que personne ne connaisse les Parisette de sa branche. »</p><p>• <b>Théodorette</b> : « Assombri depuis trois mois. Vienne, paraît-il. »</p><p>• <b>Louis</b> : « Sa main tremble. Pas celle du chirurgien — celle de l'homme. »</p><p>• <b>Marie</b> : « Joue mieux du piano qu'elle ne sourit. »</p><p>• <b>Gautier</b> : « On murmure qu'il vend à perte. »</p><p>• <b>Alicia</b> : « Deux semaines chez une cousine en avril. Sauf que sa cousine est morte l'an dernier. »</p><p>• <b>Nicolas</b> : « On ne crie pas sur Léa pour des raisons de famille — on crie pour des raisons de cœur. »</p>",reveals:["amandine_anomalie","vienne_indice"]}
+        response:"<p>Elle se penche, ravie.</p><p>• <b>Amandinette</b> : « Étrange que personne ne connaisse les Parisette de sa branche. »</p><p>• <b>Théodorette</b> : « Assombri depuis trois mois. Vienne, paraît-il. »</p><p>• <b>Louis</b> : « Sa main tremble. Pas celle du chirurgien — celle de l'homme. »</p><p>• <b>Marie</b> : « Joue mieux du piano qu'elle ne sourit. »</p><p>• <b>Gautier</b> : « On murmure qu'il vend à perte. »</p><p>• <b>Alicia</b> : « Deux semaines chez une cousine en avril. Sauf que sa cousine est morte l'an dernier. »</p><p>• <b>Lisa</b> : « On ne fait pas une scène pareille pour de l'argent — on la fait pour une affaire de cœur. »</p>",reveals:["amandine_anomalie","vienne_indice"]}
+    ]},
+  lisa:{name:"Mademoiselle Lisa Lepra",nickname:"Lisa",role:"cantatrice, ancienne muse de Léa",statut:"suspect",icon:"🎭",order:13,
+    presentation:"« Lisa Lepra. On m'a applaudie à Vienne, à Milan, à l'Opéra. Ce soir, je ne chante pas — je pleure une amie. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"eclat",label:"Cet éclat avec Léa à 16h40 ?",act:2,
+        response:"« Oui, j'ai failli lui jeter une coupe à la figure. Elle m'avait trahie. C'est entre elle et moi — c'était. »"},
+      {id:"alibi",label:"Où étiez-vous pendant la fenêtre du crime ?",act:2,
+        response:"« Au salon, à ruminer près du piano. Je n'ai pas quitté mon fauteuil. Marie, Maëlys, Boulet vous le diront. »"},
+      {id:"clochette",label:"Que savez-vous de Lady Cloé Fischer ?",act:2,
+        response:"« Clochette ? Je la croise aux cercles de jeu, la nuit, à Paris. Elle perd plus qu'elle ne l'avoue. Beaucoup plus. »",reveals:["clochette_jeu"]},
+      {id:"defense_baptiste",label:"La fiole était dans le manteau de Baptiste.",act:2,confront:true,
+        response:"<p class='narration'>Elle se lève.</p><div class='quote'>« Baptiste n'a pas ce meurtre en lui. Il était à la lisière. Laissez-le. Et oui — c'est lui, M. Plumeau. Je le sais parce que je l'aime. Léa allait le détruire. »</div>",reveals:["plumeau_indice","lisa_baptiste_indice"]},
+      {id:"origines",label:"Léa vous faisait chanter sur vos origines.",act:3,requires_response:["lisa_origines_indice"],confront:true,
+        response:"<div class='quote'>« Lepretre. Lisa Lepretre. Ma mère lavait le linge des autres. Léa le savait. Elle me saignait — huit cents livres. Voilà ma honte. Mais on ne tue pas pour ça. »</div>",reveals:["lisa_avoue_origines"]}
+    ]},
+  emilien:{name:"Maître Emilien Collin-Stanislas",nickname:"Emilien",role:"notaire de la famille",statut:"suspect",icon:"⚖️",order:14,
+    presentation:"« Maître Collin-Stanislas. Notaire. Je connais les affaires de cette maison mieux que quiconque. »",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"alibi",label:"Où étiez-vous entre 17h00 et 17h45 ?",act:3,
+        response:"« Au cabinet de lecture, seul, à étudier un dossier. Un homme de loi a besoin de calme. »"},
+      {id:"lea",label:"Que pensiez-vous de Léa ?",act:3,
+        response:"« Une personne… encombrante. Je ne pleurerai pas, je ne mentirai pas là-dessus. »"},
+      {id:"chantage",label:"Léa vous faisait chanter.",act:3,requires_response:["emilien_chantage_indice"],confront:true,
+        response:"<div class='quote'>« Soit. Elle me pressurait. Une vieille affaire de succession, des irrégularités anciennes. J'ai payé pour la paix. Je ne l'ai pas tuée — j'avais bien trop à perdre dans un scandale, justement. »</div>",reveals:["emilien_chantage_avoue"]},
+      {id:"authentifier",label:"En homme de loi, authentifiez cet acte de naissance.",act:4,requires:["acte_naissance"],confront:true,
+        response:"<p class='narration'>Un long silence.</p><div class='quote'>« Cet acte est authentique. Le sceau de la Grande Leuleu, la main du maire — je les reconnais. Oui : j'ai monté ce dossier en 1910. J'ai fait d'une servante une duchesse. Et j'en ai vécu quinze ans. »</div>",reveals:["emilien_1910_avoue"]}
     ]}
 };
 
@@ -732,7 +772,7 @@ const OBJECTS = {
     interactive:[{label:"Fouiller au pied du banc",gives:"mot_banc"}]},
   mot_banc:{name:"Mot perdu de Léa",icon:"📄",
     desc:"Un papier replié, légèrement carbonisé sur un bord.",
-    text:"Mon cher Louis, je sais pour Gautier. Cinq cents livres pour mon silence. — L."},
+    text:"Mon cher Lord Louis-Marc,\n\nOn porte certains secrets cinq années entières avant qu'une plume étrangère ne les surprenne. Je sais — pour Gautier, et pour vous.\n\nCinq cents livres, samedi soir sans faute, et la rumeur s'éteint dans l'œuf. Marie ne saura jamais — si vous savez payer.\n\n— L."},
   barbecue:{name:"Le barbecue",icon:"🔥",location:"jardin",fromAct:1,
     desc:"Encore tiède. Quelqu'un y a brûlé quelque chose récemment. Une cendre fine couvre la grille.",
     interactive:[{label:"Fouiller dans les cendres",gives:"fragment_barbecue"}]},
@@ -747,18 +787,22 @@ const OBJECTS = {
   boite_cadenassee:{name:"Boîte cadenassée",icon:"🔐",
     desc:"Petite boîte en bois, anonyme. Cadenas à combinaison à 3 chiffres.",
     isCode:true,code:"173",
-    onCodeSuccess:["acte_naissance","lettre_5_juin"],
-    onCodeFail:"Le cadenas refuse de céder. Il vous faut le bon code — sans doute lié à ce que Léa appelait son <i>vrai nom</i>."},
+    onCodeSuccess:["acte_naissance","lettre_5_juin","note_maelys"],
+    onCodeFail:"Le cadenas refuse de céder. Il vous faut le bon code — sans doute lié à la <i>phrase du jour</i> de Léa et sa grille."},
   acte_naissance:{name:"Vrai acte de naissance",icon:"📜",
     desc:"Papier jauni, écriture officielle.",
     text:"COMMUNE DE LA GRANDE LEULEU — Acte de naissance n° 47\nLe quinze octobre mil huit cent quatre-vingt-treize est née Amandine Marguerite de la Grande Leuleu, fille de Jean de la Grande Leuleu, sabotier, et de Catherine née Pâtissier. — Signé : le Maire."},
   lettre_5_juin:{name:"Lettre de Léa du 5 juin",icon:"💌",
     desc:"Datée de la veille. Écriture nerveuse mais déterminée.",
-    text:"Chère Amandine, j'ai tergiversé six mois. Je ne peux plus garder ce silence. Théodorette mérite de savoir qui vous êtes vraiment. Je lui parlerai ce week-end. Pour vous, c'est la fin du jeu. — L."},
+    text:"Les Beuhaies, le 5 juin — au crépuscule\n\nChère Amandine,\n\nVoici six longs mois que je tergiverse — six mois que je remets à demain ce qui devrait être dit dès l'aube. Mes nuits, vois-tu, s'en lassent.\n\nThéodorette est un homme d'honneur ; il mérite de connaître la femme qu'il aime — et non l'autre, celle qui en porte le nom comme un châle qui ne lui appartient pas. Je lui parlerai ce week-end, à la soirée de Chloé. Une phrase, un regard suffira.\n\nPour vous, c'est la fin du jeu. Pour moi aussi, mais d'une autre manière : je traverserai l'Atlantique le vendredi suivant, et plus jamais vous n'entendrez parler de moi.\n\n— L."},
+  note_maelys:{name:"Note scellée — pour Maëlys",icon:"✉️",
+    desc:"Une enveloppe scellée à la cire, au nom de Mademoiselle Maëlys Bouchard.",
+    text:"Mademoiselle,\n\nVous ne vous appelez pas Bouchard. Vous êtes Camille Beauchamp, nièce de la véritable Amandinette de Beauchamp — l'héritière morte d'une fièvre en mai 1910. On vous a pris votre nom et votre bien en même temps qu'on volait son identité.\n\nJe n'ai pas su réparer toutes mes fautes ; je peux au moins réparer celle-ci. Sachez qui vous êtes.\n\n— L.",
+    revealsOnView:["maelys_beauchamp"]},
   potager_trace:{name:"Le coin discret",icon:"🌿",location:"potager",fromAct:1,
     desc:"Derrière les framboisiers, l'herbe est foulée. Deux paires d'empreintes de talons, face à face. Aucun objet, mais l'endroit raconte qu'on s'y est retrouvé."},
-  manteau_nicolas:{name:"Le manteau de Lord Nicolas",icon:"🧥",location:"bar",fromAct:2,
-    desc:"Sur un tabouret. Nicolas n'est pas à proximité — il vient de rentrer de la lisière. Une bosse dans la poche extérieure.",
+  manteau_baptiste:{name:"Le manteau de Monsieur Baptiste André",icon:"🧥",location:"bar",fromAct:2,
+    desc:"Sur un tabouret. Baptiste n'est pas à proximité — il vient de rentrer de la lisière. Une bosse dans la poche extérieure.",
     interactive:[{label:"Fouiller les poches",gives:"fiole_digitaline"}]},
   fiole_digitaline:{name:"Fiole vide — « digitaline »",icon:"🧪",
     desc:"Petite fiole de verre, bouchon de liège, vide.",
@@ -768,7 +812,7 @@ const OBJECTS = {
     interactive:[{label:"Fouiller la poche intérieure",gives:"lettre_vienne"}]},
   lettre_vienne:{name:"Lettre — Vienne",icon:"💌",
     desc:"Écriture de Léa, encre brune.",
-    text:"Mon cher Duc, je sais pour Vienne. Mille cinq cents livres pour mon silence. — L."},
+    text:"Monsieur le Duc,\n\nLa diplomatie de Vienne, vous le savez, n'épargne jamais les imprudents — et je crains qu'une certaine dame, et une certaine note confidentielle, n'aient laissé plus de traces qu'on ne le souhaiterait.\n\nMille cinq cents livres me feront perdre le fil de cette malheureuse rumeur. Samedi soir, à votre convenance. Vous comprendrez que mes patiences ont leurs limites.\n\n— L."},
   manteau_alicia:{name:"Le manteau d'Alicia",icon:"🧥",location:"bar",fromAct:2,
     desc:"Sur un tabouret. La doublure paraît étrangement épaisse, mais vous ne sentez rien quand vous la tâtez de l'extérieur. <i>(C'est par Alicia elle-même qu'il faudra obtenir ce qu'elle dissimule.)</i>"},
   tiroir_buffet:{name:"Le tiroir du buffet",icon:"🗄️",location:"bar",fromAct:2,
@@ -777,7 +821,7 @@ const OBJECTS = {
   flute_lea:{name:"La flûte de Léa",icon:"🥂",location:"salon",fromAct:2,
     desc:"Restée sur le buffet du salon depuis le toast. Légère trace ambrée au fond. À examiner — peut-être à faire sentir à Louis."},
   buffet_salon:{name:"Le piano",icon:"🎹",location:"salon",fromAct:2,
-    desc:"Le piano à queue de Marie. C'est ici qu'elle a joué de 17h00 à 17h45, sous le regard de Romanette et avec Alicia qui tournait les pages."},
+    desc:"Le piano à queue de Marie. C'est ici qu'elle a joué de 17h00 à 17h45, sous le regard de Maëlys et avec Alicia qui tournait les pages."},
   porte_manteau:{name:"Le porte-manteau du couloir",icon:"🪝",location:"couloir",fromAct:3,
     desc:"Quelques châles et redingotes. Rien d'intéressant ici, mais ce couloir mène à tout."},
   chambre_alicia:{name:"La chambre d'Alicia",icon:"🛏️",location:"chambres",fromAct:3,
@@ -796,24 +840,28 @@ const OBJECTS = {
     desc:"Plan dessiné à la main. La dépendance est entourée d'un trait épais à l'encre brune."},
   note_rendezvous:{name:"Note de rendez-vous",icon:"✉️",
     desc:"Petit billet plié.",
-    text:"6 juin, 17h30, dépendance — apporter la totalité. — L."},
+    text:"Mon cher Lord,\n\nSamedi six juin, dix-sept heures trente, à la dépendance du Domaine. Vous connaissez le chemin.\n\nLa totalité, je vous prie — point une livre de moins. Soyez ponctuel : ma patience a des bornes que je préfère vous épargner.\n\n— L."},
   argent_mallette:{name:"5 000 livres en liquide",icon:"💰",
     desc:"Petites coupures, neuves. Préparées pour un paiement."},
   corps_lea:{name:"Léa, allongée",icon:"⚰️",location:"dependance",fromAct:4,
-    desc:"Sous un drap. Visage pâle, mains relâchées, pas de blessure. Empoisonnement confirmé. Une tasse de thé renversée à ses pieds."},
+    desc:"Sous un drap. Visage pâle, mains relâchées, pas de blessure. Empoisonnement confirmé. Une tasse de thé renversée à ses pieds.",
+    text:"Détail des clefs : la clef personnelle de Léa pend encore à son clou, à l'intérieur, près de la porte. Pourtant la porte a été retrouvée verrouillée de l'extérieur. Donc le meurtrier a fermé avec un AUTRE trousseau — le double rangé d'ordinaire dans le tiroir du buffet du bar. Quiconque a verrouillé cette porte avait accès à ce tiroir.",
+    revealsOnView:["double_clef_indice"]},
   tasse_the:{name:"Tasse de thé renversée",icon:"☕",location:"dependance",fromAct:4,
     desc:"Léa buvait quand son cœur a flanché. L'odeur est ténue mais reconnaissable — celle de la flûte du toast."},
-  paquet_alicia:{name:"Paquet « N. → Alicia »",icon:"💌",location:"dependance",fromAct:4,
-    desc:"22 lettres tendres signées « N. », adressées à Alicia il y a un an. Ruban de soie rose."},
+  paquet_alicia:{name:"Paquet « B. → Alicia »",icon:"💌",location:"dependance",fromAct:4,
+    desc:"22 lettres tendres signées « B. », écrites par Baptiste André, adressées à Alicia il y a un an. Ruban de soie rose. Vous en feuilletez une.",
+    text:"Paris, le 17 mars — il y a un an\n\nMa très chère Alicia,\n\nJe ne dors plus depuis votre dernière lettre. Vos mots me hantent — ils dansent en moi comme une mélodie qu'on n'oserait fredonner en société. La nuit, je revois vos yeux, votre rire, ce moment dans le jardin de votre tante où vous m'avez tendu la main, et où le monde a cessé pour un trop court instant.\n\nJe sais que rien ne se peut entre nous — Gautier, votre nom, le monde, les bienséances qui nous font et nous défont. Et pourtant je ne sais plus vivre sans cette correspondance qui passe en cachette d'un courrier à l'autre.\n\nBrûlez celle-ci, je vous en supplie, ou cachez-la là où votre mari ne la trouvera jamais.\n\nJe vous aime. Lâchement, à distance, mais entièrement.\n\n— B."},
   paquet_marie:{name:"Paquet « Marie » (par Léa)",icon:"💌",location:"dependance",fromAct:4,
-    desc:"3 ou 4 lettres dans une boîte de papier japonais. Écriture de Léa, adressées à Marie. Mots tendres."},
-  carnet_lea:{name:"Carnet codé de Léa",icon:"📓",location:"dependance",fromAct:4,
-    desc:"Carnet à couverture sombre. Deux pages vous arrêtent.",
-    text:"GRILLE — A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8 I=9 / J→1 K→2 L→3 M→4 N→5 O→6 P→7 Q→8 R→9 S→1 T→2 U→3 V→4 W→5 X→6 Y→7 Z→8\n« Pour mes cadenas et mes coffres, j'utilise les initiales du nom et je convertis chaque lettre en un seul chiffre. — L. »\n\nMon carnet des affaires :\nL.R. — Gautier — 5✦1✦7 (500 livres) ✓ payé\nG.L. — Louis-Marc — 5✦0 (5 000 livres) en attente — rdv 17h30\nN.P. — Plumeau — 2✦7 (200 livres) ✓ payé\nT.P. — Vienne — 1✦5 (1 500 livres) en attente\nC.C. — mardi — 1✦0 (1 000 livres) en attente\nB.M. — Tatoine — 2✦0 (par trim.) ✓ régulier\nM.R. — potager — non, garder le silence\n\n★ A.G.L. — VRAI NOM — coffret ★",
-    revealsOnView:["carnet_lu","plumeau_indice","clochette_jeu"]},
+    desc:"3 ou 4 lettres dans une boîte de papier japonais. Écriture de Léa, adressées à Marie. Vous en feuilletez une.",
+    text:"Les Beuhaies, le 12 mai\n\nMa Marie,\n\nTu n'imagines pas combien de fois j'écris ton nom dans la marge de mes manuscrits — comme si l'encre, en formant tes lettres, pouvait te rapprocher de moi à travers ces pages.\n\nJe garde précieusement ce que tu m'as confié. Personne, jamais, ne posera les yeux dessus — je te le promets sur les rosiers que nous avons plantés ensemble, l'an dernier, derrière la dépendance.\n\nMardi prochain, derrière les framboisiers ? Le soleil y est plus doux qu'aux salons, et nul n'y va qu'avec un panier à la main.\n\n— Léa"},
+  carnet_lea:{name:"Carnet de Léa",icon:"📓",location:"dependance",fromAct:4,
+    desc:"Carnet à couverture sombre. La première page contient une grille, les pages suivantes un journal de bord poétique daté.",
+    text:"PAGE 1 — GRILLE DE MES CODES (méthode personnelle)\nA=1  B=2  C=3  D=4  E=5  F=6  G=7  H=8  I=9\nJ→1  K→2  L→3  M→4  N→5  O→6  P→7  Q→8  R→9\nS→1  T→2  U→3  V→4  W→5  X→6  Y→7  Z→8\n\n« Pour mes coffres et mes serrures, je prends les initiales des trois mots du titre de mon poème du jour. Je convertis chaque lettre en un chiffre (si la lettre vaut plus de neuf, j'additionne — 12 → 1+2 = 3). Le code change ainsi tous les jours. — L. »\n\n— — — JOURNAL DE BORD — — —\n\nLundi 1er juin\n« Ma décision prise »\nJ'ai pris ma décision hier soir, au creux d'un orage. Trop de noms portés dans ce carnet, trop de secrets pesés dans cette main qui écrit. Mon âme étouffe sous le poids des fortunes d'autrui. Demain je vendrai mes meubles. La semaine prochaine, je prendrai la mer. Sept ans à plumer les puissants à Londres : il est temps que cette comédie cesse.\n\nMardi 2 juin\n« Bateau parle anglais »\nJe me suis présentée chez Thomas Cook ce matin, voilette baissée. Le Berengaria appareille du Havre vendredi 12 juin. Cabine B-37, première classe. J'ai signé Mademoiselle Léa de Pavy — peut-être la dernière fois. New York, dit-on, accueille les femmes qui ont des choses à oublier.\n\nMercredi 3 juin\n« Vendre mes meubles »\nL'antiquaire est venu cet après-midi. Il a touché du doigt la commode de Maman, sans un mot. Trois cents livres pour le tout. J'ai accepté. Je n'emporterai qu'une malle et mes plumes. Les Servantes, mon roman, partira sous mon bras — c'est en cherchant pour ce livre qu'une vérité m'est revenue.\n\nJeudi 4 juin\n« Quatre jours avant »\nJe relis pour la dernière fois mes dossiers, je prépare mes adieux. Neuf enveloppes posées sur le secrétaire — neuf noms, neuf ardoises à solder. Mes derniers rappels d'échéance, pour samedi matin chez les Beuhaies. Quand je serai en mer, ils dormiront mieux. Moi aussi.\n\nVendredi 5 juin\n« Une lettre cachée »\nJ'ai écrit ce soir une lettre que je ne remettrai pas. Elle attendra. Pliée dans le coffret, sous la malle de rotin du jardin, avec un autre papier plus brûlant. Un acte de naissance que personne ne devrait jamais lire. Demain, à la soirée de Chloé, je laisserai entendre. Cette femme a volé une vie en mai 1910 — je vais la rendre, et réparer pour l'enfant qu'on a dépouillée avec elle.\n\nSAMEDI 6 JUIN  ★ AUJOURD'HUI ★\n« Au grand large »\nNeuf rappels distribués ce matin dans le hall — pliés, scellés, glissés en mains propres. Chloé fête ses trente ans. J'ai mis mes plus beaux gants. Demain matin, six heures, le train du Havre. J'emporte mes Servantes, mes plumes, et une cabine au nom d'une autre. Au grand large.\n\n(Les comptes de chantage de Léa — L.R. Louis-Marc, G.L. Gautier, B.A. Plumeau, T.P. Vienne, C.C. Clochette, T.C. Tatoine, B.M. Boulet, L.L. origines, E.C.S. Beauchamp 1910 — sont sur un autre cahier dans le tiroir. Ils ne servent pas au code du coffret.)",
+    revealsOnView:["carnet_lu","plumeau_indice","clochette_jeu","methode_journal"]},
   notes_recherche:{name:"Notes de recherche de Léa",icon:"📝",location:"dependance",fromAct:4,
     desc:"Notes manuscrites destinées à son prochain roman.",
-    text:"Notes — projet « Les Servantes » — 5 juin\nA.G.L. : confirmée. Servante chez la maison Beauchamp de 1907 à 1910. À 17 ans, présente à l'auberge de la Grande Leuleu lors de la mort par fièvre d'une jeune Mademoiselle de Parisette de passage — branche éloignée de Touraine, sans descendance connue. Reprend ses papiers. Vérifié auprès du registre paroissial et de deux anciens du village. Doit en parler à Théodorette dans la semaine — je ne peux plus garder ce silence. — L.",
+    text:"Notes — projet « Les Servantes » — 5 juin\nA.G.L. — Amandine de la Grande Leuleu, dite Amandinette — confirmée. Servante chez les Beauchamp de 1907 à 1910. Au service de Mademoiselle Amandinette de Beauchamp — l'héritière, qui partageait son prénom. Cette dernière morte d'une fièvre en mai 1910. La semaine suivante, une « Mademoiselle Amandinette de Beauchamp » se présente au bal des Parisette avec la carte d'invitation et la robe de la défunte. Théodorette de Parisette l'épouse quatre mois plus tard. Vérifié auprès du registre paroissial et de deux anciens du village. Doit en parler à Théodorette dans la semaine — je ne peux plus garder ce silence. — L.",
     revealsOnView:["agl_decodee","amandine_anomalie"]},
   clef_dependance:{name:"Clef de la dépendance",icon:"🗝️",
     desc:"Clef récupérée auprès d'Alicia. Elle ouvre la dépendance."}
@@ -1011,6 +1059,7 @@ function talkTo(charId){
   const c=CHARACTERS[charId];
   State.charactersTalked.add(charId);
   let html=`<div class="quote">${c.presentation}</div>`;
+  if(c.tenue) html+=`<div style="font-size:13px;color:var(--brown-2);font-style:italic;margin:-4px 0 10px;padding-left:4px">👗 ${c.tenue}</div>`;
   const ask=c.questions.filter(q=>!q.confront && isQAvailable(c,q));
   const conf=c.questions.filter(q=>q.confront && isQAvailable(c,q));
   const locked=c.questions.filter(q=>!isQAvailable(c,q));
@@ -1077,13 +1126,17 @@ function askQ(charId,qId){
     body+=`<div class="success-card"><h3>★ La vérité éclate ★</h3>
       <p style="text-align:center;color:var(--brown);line-height:1.7">
       Lady Amandinette de Parisette — née Amandine de la Grande Leuleu, ancienne servante chez les Beauchamp, usurpe l’identité de sa maîtresse Mademoiselle Amandinette de Beauchamp morte d’une fièvre — vole sa carte d’invitation au bal Parisette et une de ses robes, y rencontre Théodorette et l’épouse — a tué Léa pour préserver son imposture. Théodorette est dévasté. Le jardin se tait. Vous avez résolu l'affaire.</p>
+      <p style="text-align:center;color:var(--brown-2);font-size:14px;line-height:1.6;margin-top:8px">Et le coffret a livré une dernière vérité : la jeune Maëlys est <b>Camille Beauchamp</b>, l'héritière dépossédée que Léa voulait rétablir ; sommé d'authentifier l'acte, le notaire <b>Emilien</b> a avoué la fraude de 1910.</p>
       <p style="margin-top:14px"><b>Drames parallèles révélés :</b></p>
       <p style="font-size:14px;color:var(--brown-2);text-align:left;padding:0 14px">
       • <b>Théodorette</b> : chantage Vienne. Couvrait Amandinette par instinct.<br>
       • <b>Louis-Marc ⟷ Gautier</b> : liaison de 5 ans. Chantage.<br>
       • <b>Marie</b> : amante de Léa.<br>
-      • <b>Nicolas (Plumeau) / Romanette</b> : fiancés secrets.<br>
-      • <b>Alicia ⟷ Nicolas</b> : liaison passée, lettres confiées à Léa.<br>
+      • <b>Baptiste (M. Plumeau)</b> : démasqué par Léa ; la fiole avait été plantée dans son manteau.<br>
+      • <b>Lisa</b> : cantatrice, ex-amante de Léa et amante de Baptiste. Origines modestes cachées (fausse piste).<br>
+      • <b>Alicia ⟷ Baptiste</b> : liaison passée, lettres « B. » confiées à Léa.<br>
+      • <b>Emilien</b> : notaire, faussaire complice de l'imposture de 1910 (chantage 5 000 £).<br>
+      • <b>Maëlys</b> : en réalité Camille Beauchamp, l'héritière dépossédée — que Léa voulait rétablir.<br>
       • <b>Clochette</b> : dettes de jeu.<br>
       • <b>Boulet ⟷ Tatoine</b> : lettres anciennes.
       </p></div>`;
