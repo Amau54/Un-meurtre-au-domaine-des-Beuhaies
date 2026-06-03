@@ -527,6 +527,7 @@ const CHARACTERS = {
     ]},
   amandinette:{name:"Lady Amandinette de Parisette",nickname:"Amandinette",role:"Duchesse, épouse du Duc Théodorette",statut:"suspect",icon:"👑",order:1,
     presentation:"« Duchesse Amandinette de Parisette. Épouse du Duc. Léa était mon amie d'enfance, sa mort me bouleverse. »",
+    tenue:"Longue robe bleu ciel entièrement semée de fleurs, col carré, boutons de nacre, jupe à volant.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"alibi",label:"Où étiez-vous cet après-midi ?",act:1,
@@ -584,7 +585,7 @@ const CHARACTERS = {
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"alibi",label:"Où étiez-vous entre 17h00 et 17h45 ?",act:1,
-        response:"« Au piano. Alicia tournait les pages. Maëlys lisait à côté. Lady Boulet de Myrtilles est passée vers 17h30. »"},
+        response:"« Au piano. Alicia tournait les pages. Maëlys, en robe de tulle vert, lisait à côté. Lady Boulet de Myrtilles est passée vers 17h30. »"},
       {id:"couloir",label:"Avez-vous vu quelqu'un traverser ?",act:2,
         response:"« Du coin de l'œil, j'ai vu quelqu'un traverser le couloir vers 17h13-17h15, en direction du jardin. Je n'ai pas reconnu — j'étais sur un passage difficile. »"},
       {id:"croire",label:"Qui aurait pu vouloir tuer Léa ?",act:2,
@@ -628,6 +629,7 @@ const CHARACTERS = {
     ]},
   baptiste:{name:"Monsieur Baptiste André",nickname:"Baptiste",role:"caricaturiste, secrètement M. Plumeau",statut:"suspect",icon:"🪶",order:7,
     presentation:"« Baptiste André. Je dessine. On me tolère dans les salons tant que mes caricatures visent les autres. »",
+    tenue:"Redingote de velours vert profond brodée d'or, gilet de brocart crème, jabot et manchettes de dentelle.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"alibi",label:"Où étiez-vous entre 16h50 et 17h45 ?",act:1,
@@ -648,9 +650,11 @@ const CHARACTERS = {
       {id:"dispute_gautier",label:"Avez-vous vu Gautier et Léa se disputer ?",act:1,
         response:"« Depuis la fenêtre du salon du bar, vers 16h15, je les ai vus se disputer dans le jardin. Léa lui a tendu un papier, il l'a fourré dans sa poche. »"},
       {id:"silhouette",label:"Quelque chose près des manteaux à 17h36 ?",act:2,
-        response:"« Je revenais de la salle de bain par le couloir vers 17h36. La porte du bar était entrouverte. J'ai aperçu quelqu'un penché sur les manteaux, glissant quelque chose dans une veste. Le rayon de soleil m'a empêchée de voir le visage. »"},
+        response:"« Je revenais de la salle de bain par le couloir vers 17h36. La porte du bar était entrouverte. J'ai aperçu quelqu'un penché sur les manteaux, glissant quelque chose dans une veste. Le rayon de soleil m'a empêchée de voir le visage. »",reveals:["silhouette_vue"]},
+      {id:"silhouette_fleurs",label:"Cette silhouette de 17h36 — un détail vous revient-il ?",act:4,requires_response:["silhouette_vue"],confront:true,
+        response:"<p class='narration'>Elle ferme les yeux un instant, comme pour rappeler l'image.</p><div class='quote'>« Une chose me revient, oui… La personne penchée sur les manteaux portait une <b>robe</b> — une robe de femme, j'en jurerais — toute <b>semée de fleurs</b>, de grandes fleurs sur toute l'étoffe. La couleur ? Ne me la demandez pas : je ne vois pas les couleurs, je ne les ai jamais vues. Mais ces fleurs-là, je les revois. »</div>",reveals:["silhouette_robe_fleurs"]},
       {id:"lisa_baptiste",label:"Sur la cantatrice Lisa et le caricaturiste ?",act:2,
-        response:"« La Lepra ne quittait pas Monsieur André des yeux — pas comme une amie, comme une amante. Et lui, ce caricaturiste… on murmure qu'il signe ses pamphlets d'un autre nom. M. Plumeau, peut-être. »",reveals:["plumeau_indice","lisa_baptiste_indice"]},
+        response:"« La Lepra ne quittait pas Monsieur André des yeux — superbe dans son velours vert — pas comme une amie, comme une amante. Et lui, ce caricaturiste… on murmure qu'il signe ses pamphlets d'un autre nom. M. Plumeau, peut-être. »",reveals:["plumeau_indice","lisa_baptiste_indice"]},
       {id:"lisa_origines",label:"La cantatrice Lisa, dans vos annuaires ?",act:2,
         response:"« La Lepra ? Mon annuaire ne ment pas : née Lepretre, fille d'une blanchisseuse de Belleville. Le nom de scène cache une enfant du lavoir. Léa, j'imagine, le savait aussi. »",reveals:["lisa_origines_indice"]},
       {id:"emilien_terres",label:"Et Maître Collin-Stanislas ?",act:3,
@@ -668,6 +672,7 @@ const CHARACTERS = {
     ]},
   maelys:{name:"Mademoiselle Maëlys Bouchard",nickname:"Maëlys",role:"demoiselle, protégée de Chloé — observatrice clé",statut:"bavard",icon:"📖",order:9,
     presentation:"« Maëlys Bouchard. Lady Chloé a eu la bonté de m'inviter. Je ne suis personne, ici — mais je vois bien des choses. »",
+    tenue:"Longue robe de tulle vert profond, épaules dénudées, buste perlé, ceinture de satin.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"vu",label:"Qu'avez-vous vu cet après-midi ?",act:1,
@@ -683,6 +688,7 @@ const CHARACTERS = {
     ]},
   tatoine:{name:"Sir Tatoine de Crevonville",nickname:"Tatoine",role:"diplomate, époux de Clochette",statut:"bavard",icon:"🚬",order:10,
     presentation:"« Sir Tatoine de Crevonville, diplomate. Ami du Duc Théodorette. Mon épouse Clochette est près de moi. »",
+    tenue:"Redingote de brocart noir brodée d'or, gilet crème, haut jabot de dentelle, chapeau haut-de-forme, loup blanc sur le haut du visage.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"vu",label:"Qu'avez-vous vu cet après-midi ?",act:1,
@@ -1053,6 +1059,7 @@ function talkTo(charId){
   const c=CHARACTERS[charId];
   State.charactersTalked.add(charId);
   let html=`<div class="quote">${c.presentation}</div>`;
+  if(c.tenue) html+=`<div style="font-size:13px;color:var(--brown-2);font-style:italic;margin:-4px 0 10px;padding-left:4px">👗 ${c.tenue}</div>`;
   const ask=c.questions.filter(q=>!q.confront && isQAvailable(c,q));
   const conf=c.questions.filter(q=>q.confront && isQAvailable(c,q));
   const locked=c.questions.filter(q=>!isQAvailable(c,q));
