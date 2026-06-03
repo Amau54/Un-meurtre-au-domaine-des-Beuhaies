@@ -25,15 +25,17 @@ Phrase à mettre dans **tous** les prompts :
 
 ---
 
-## 3. Petits éléments → PLUSIEURS par feuille A4
+## 3. Un objet = un fichier = une taille imposée
 
-Pour tout ce qui est petit (billets courts, étiquettes), on ne gâche pas une A4 par objet : on en met **plusieurs sur une même A4**, à découper.
+On produit **un seul objet à la fois**, dans **un seul fichier**, à sa **vraie dimension** (pas de planche de plusieurs éléments). C'est le système séquentiel de `PROMPTS_OBJETS.md` : on colle le **prompt maître** une fois, puis on tape un **numéro** ou **« suivant »**.
 
-Phrase type :
-> « Mise en page d'une feuille **A4 portrait** contenant **N éléments** disposés en **grille (lignes × colonnes)**, séparés par de **fins traits de coupe en pointillés**, marges régulières. »
+Tailles imposées (résumé — détail dans `LISTE_OBJETS.md`) :
+- **A4** : acte de naissance.
+- **A5** : lettres, carnet (grille + journal), comptes (paysage), notes de recherche.
+- **A6** : billets courts (mots de chantage, rendez-vous, note scellée).
+- **Petit** : étiquette de fiole (~6×3 cm), fragment brûlé (~7×5 cm).
 
-- Étiquettes (objet 05) : **6 à 8 par A4**.
-- Billets courts (1 à 4 lignes) : **2 à 4 par A4**, identiques ou différents.
+> On peut ensuite imprimer plusieurs petits fichiers sur une même page via les réglages de l'imprimante (« plusieurs pages par feuille »), mais **chaque objet reste un fichier distinct**.
 
 ---
 
@@ -66,10 +68,10 @@ L'approche par défaut est désormais : **l'IA écrit elle-même le texte** comm
 L'IA peut « cuire » un papier déjà jauni. Mais le plus réaliste se fait **à la main, après impression** :
 - imprimer sur **papier crème / ivoire** (90–120 g) ;
 - vieillir au **thé/café** (tamponner, sécher) ;
-- **brûler/roussir les bords** au briquet pour les pièces « brûlées » (objets 01, 02, 07d, 07f) ;
-- **froisser puis défroisser** pour l'objet 07b ;
-- **déchirer** pour l'objet 07e ;
-- pour les plis **scellés** (04b), plier puis poser un **cachet de cire** réel.
+- **brûler/roussir les bords** au briquet pour les pièces « brûlées » (objets **1, 2, 11, 13**) ;
+- **froisser puis défroisser** pour l'objet **9** (mot à Clochette) ;
+- **déchirer** pour l'objet **12** (mot à Baptiste) ;
+- pour la note **scellée** (objet **5**), plier puis poser un **cachet de cire** réel.
 
 > Conclusion : l'IA fournit le **visuel à plat** ; le réalisme physique (brûlé, froissé, cire) se fait au moment du montage.
 
