@@ -451,6 +451,7 @@ a{color:var(--brown-2)}
 <div class="floating-actions">
   <button class="float-btn" id="btn-inventory" title="Mes objets">🎒<span class="count" id="cnt-inv">0</span></button>
   <button class="float-btn" id="btn-notebook" title="Mon carnet">📓<span class="count" id="cnt-note">0</span></button>
+  <button class="float-btn" id="btn-plan" title="Plan du Domaine" onclick="showPlan()">🗺️</button>
   <button class="float-btn" id="btn-mj" title="Sir Amaury (MJ)" style="background:var(--gold);color:#fff">⚜</button>
 </div>
 
@@ -599,6 +600,7 @@ const CHARACTERS = {
     ]},
   gautier:{name:"Lord Gautier de Lemoine",nickname:"Gautier",role:"financier, époux d'Alicia",statut:"suspect",icon:"💼",order:5,
     presentation:"« Lord Gautier de Lemoine, finances et placements. Mon épouse Alicia m'accompagne, comme toujours. »",
+    tenue:"Veste brune cintrée, pantalon beige clair, chaussures de cuir fauve — visiblement trop chaud, manches relevées dès 17h00.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"alibi",label:"Où étiez-vous entre 17h10 et 17h33 ?",act:1,
@@ -657,8 +659,6 @@ const CHARACTERS = {
         response:"« La Lepra ne quittait pas Monsieur André des yeux — superbe dans son velours vert — pas comme une amie, comme une amante. Et lui, ce caricaturiste… on murmure qu'il signe ses pamphlets d'un autre nom. M. Plumeau, peut-être. »",reveals:["plumeau_indice","lisa_baptiste_indice"]},
       {id:"lisa_origines",label:"La cantatrice Lisa, dans vos annuaires ?",act:2,
         response:"« La Lepra ? Mon annuaire ne ment pas : née Lepretre, fille d'une blanchisseuse de Belleville. Le nom de scène cache une enfant du lavoir. Léa, j'imagine, le savait aussi. »",reveals:["lisa_origines_indice"]},
-      {id:"emilien_terres",label:"Et Maître Collin-Stanislas ?",act:3,
-        response:"« Le notaire ? Il a racheté pour une bouchée de pain les terres des Beauchamp, en 1910, juste après la mort de leur jeune héritière. Étrange aubaine pour un simple clerc. »",reveals:["emilien_chantage_indice"]},
       {id:"gautier_placard",label:"Vu Gautier dans le couloir ?",act:3,
         response:"« Je passais dans le couloir intérieur vers 17h33. J'ai vu Gautier glisser quelque chose de lourd dans le placard, vivement. »"},
       {id:"alicia_bar",label:"Avez-vous vu Alicia pendant la cohue ?",act:3,
@@ -751,18 +751,33 @@ const CHARACTERS = {
       {id:"origines",label:"Léa vous faisait chanter sur vos origines.",act:3,requires_response:["lisa_origines_indice"],confront:true,
         response:"<div class='quote'>« Lepretre. Lisa Lepretre. Ma mère lavait le linge des autres. Léa le savait. Elle me saignait — huit cents livres. Voilà ma honte. Mais on ne tue pas pour ça. »</div>",reveals:["lisa_avoue_origines"]}
     ]},
-  emilien:{name:"Maître Emilien Collin-Stanislas",nickname:"Emilien",role:"notaire de la famille",statut:"suspect",icon:"⚖️",order:14,
-    presentation:"« Maître Collin-Stanislas. Notaire. Je connais les affaires de cette maison mieux que quiconque. »",
+  lorenzo:{name:"Comte Lorenzo Pariset",nickname:"Lorenzo",role:"amateur d'art italien, mari de Lola",statut:"bavard",icon:"🎩",order:14,
+    presentation:"« Comte Lorenzo Pariset, sans particule à la française. Mécène à mes heures. Mon épouse Lola est près de moi. »",
+    tenue:"Pantalon noir, chemise blanche immaculée, chapeau noir à large bord, bottines cirées, fine canne d'ébène à pommeau d'argent.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
-      {id:"alibi",label:"Où étiez-vous entre 17h00 et 17h45 ?",act:3,
-        response:"« Au cabinet de lecture, seul, à étudier un dossier. Un homme de loi a besoin de calme. »"},
-      {id:"lea",label:"Que pensiez-vous de Léa ?",act:3,
-        response:"« Une personne… encombrante. Je ne pleurerai pas, je ne mentirai pas là-dessus. »"},
-      {id:"chantage",label:"Léa vous faisait chanter.",act:3,requires_response:["emilien_chantage_indice"],confront:true,
-        response:"<div class='quote'>« Soit. Elle me pressurait. Une vieille affaire de succession, des irrégularités anciennes. J'ai payé pour la paix. Je ne l'ai pas tuée — j'avais bien trop à perdre dans un scandale, justement. »</div>",reveals:["emilien_chantage_avoue"]},
-      {id:"authentifier",label:"En homme de loi, authentifiez cet acte de naissance.",act:4,requires:["acte_naissance"],confront:true,
-        response:"<p class='narration'>Un long silence.</p><div class='quote'>« Cet acte est authentique. Le sceau de la Grande Leuleu, la main du maire — je les reconnais. Oui : j'ai monté ce dossier en 1910. J'ai fait d'une servante une duchesse. Et j'en ai vécu quinze ans. »</div>",reveals:["emilien_1910_avoue"]}
+      {id:"toast",label:"Qu'avez-vous vu au toast ?",act:1,
+        response:"« Le toast s'est tenu sans incident notable, du moins pour qui ne savait pas qu'on y versait du poison. »"},
+      {id:"theo_couloir",label:"Avez-vous vu le Duc sortir du salon ?",act:2,
+        response:"« De ma place près de la baie, j'ai vu Théodorette sortir précipitamment dans le couloir vers 17h13, l'air inquiet. »",reveals:["theo_couloir_corrobore"]},
+      {id:"plumeau",label:"Connaissez-vous M. Plumeau ?",act:2,requires_response:["plumeau_indice"],
+        response:"« Évidemment que c'est Baptiste — j'expose ses caricatures à Milan depuis deux ans. Mais le démasquer n'a jamais été dans mes intentions : son trait vaut plus que sa réputation. »",reveals:["plumeau_confirme"]},
+      {id:"gautier_lorenzo",label:"Vous avez observé Lord Gautier ?",act:3,
+        response:"« Il s'est rongé les ongles tout l'après-midi. Sa veste brune et son pantalon beige étaient froissés comme s'il avait couru — un rendez-vous, je crois. »",reveals:["gautier_nerveux"]}
+    ]},
+  lola:{name:"Comtesse Lola Pariset",nickname:"Lola",role:"héritière française, épouse de Lorenzo",statut:"bavard",icon:"🌸",order:15,
+    presentation:"« Lola Pariset, née Bastien. Mon père vend de l'acier, mon mari aime la peinture. Je tiens, je crois, des deux. »",
+    tenue:"Longue robe bleu marine soyeuse, gants blancs montant au coude, collier de perles à plusieurs rangs, serre-tête perlé.",
+    questions:[
+      {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
+      {id:"toast",label:"Au toast, qu'avez-vous remarqué ?",act:1,
+        response:"« Amandinette a glissé quelques mots à l'oreille de Léa juste après le toast. Je l'ai vu. Je n'ai pas entendu. »",reveals:["amandinette_toast_corrobore"]},
+      {id:"lisa_salon",label:"Lisa était-elle au salon tout l'après-midi ?",act:2,
+        response:"« Oui. La cantatrice n'a pas quitté son fauteuil de tout l'après-midi. Elle ruminait, mais elle était là, en pleine vue. »",reveals:["lisa_alibi_corrobore"]},
+      {id:"theo_couloir",label:"Vu le Duc rentrer du couloir ?",act:2,
+        response:"« J'ai vu le Duc Théodorette rentrer du couloir vers 17h20, troublé. Cela n'a duré qu'un instant. »",reveals:["theo_couloir_corrobore"]},
+      {id:"lea_lettre",label:"Léa vous avait-elle écrit récemment ?",act:4,
+        response:"« Oui — en mai, pour me recommander un poète. Sa dernière lettre. Elle y parlait d'un voyage. Je n'ai compris qu'aujourd'hui ce qu'elle voulait dire. »"}
     ]}
 };
 
@@ -857,7 +872,7 @@ const OBJECTS = {
     text:"Les Beuhaies, le 12 mai\n\nMa Marie,\n\nTu n'imagines pas combien de fois j'écris ton nom dans la marge de mes manuscrits — comme si l'encre, en formant tes lettres, pouvait te rapprocher de moi à travers ces pages.\n\nJe garde précieusement ce que tu m'as confié. Personne, jamais, ne posera les yeux dessus — je te le promets sur les rosiers que nous avons plantés ensemble, l'an dernier, derrière la dépendance.\n\nMardi prochain, derrière les framboisiers ? Le soleil y est plus doux qu'aux salons, et nul n'y va qu'avec un panier à la main.\n\n— Léa"},
   carnet_lea:{name:"Carnet de Léa",icon:"📓",location:"dependance",fromAct:4,
     desc:"Carnet à couverture sombre. La première page contient une grille, les pages suivantes un journal de bord poétique daté.",
-    text:"PAGE 1 — GRILLE DE MES CODES (méthode personnelle)\nA=1  B=2  C=3  D=4  E=5  F=6  G=7  H=8  I=9\nJ→1  K→2  L→3  M→4  N→5  O→6  P→7  Q→8  R→9\nS→1  T→2  U→3  V→4  W→5  X→6  Y→7  Z→8\n\n« Pour mes coffres et mes serrures, je prends les initiales des trois mots du titre de mon poème du jour. Je convertis chaque lettre en un chiffre (si la lettre vaut plus de neuf, j'additionne — 12 → 1+2 = 3). Le code change ainsi tous les jours. — L. »\n\n— — — JOURNAL DE BORD — — —\n\nLundi 1er juin\n« Ma décision prise »\nJ'ai pris ma décision hier soir, au creux d'un orage. Trop de noms portés dans ce carnet, trop de secrets pesés dans cette main qui écrit. Mon âme étouffe sous le poids des fortunes d'autrui. Demain je vendrai mes meubles. La semaine prochaine, je prendrai la mer. Sept ans à plumer les puissants à Londres : il est temps que cette comédie cesse.\n\nMardi 2 juin\n« Bateau parle anglais »\nJe me suis présentée chez Thomas Cook ce matin, voilette baissée. Le Berengaria appareille du Havre vendredi 12 juin. Cabine B-37, première classe. J'ai signé Mademoiselle Léa de Pavy — peut-être la dernière fois. New York, dit-on, accueille les femmes qui ont des choses à oublier.\n\nMercredi 3 juin\n« Vendre mes meubles »\nL'antiquaire est venu cet après-midi. Il a touché du doigt la commode de Maman, sans un mot. Trois cents livres pour le tout. J'ai accepté. Je n'emporterai qu'une malle et mes plumes. Les Servantes, mon roman, partira sous mon bras — c'est en cherchant pour ce livre qu'une vérité m'est revenue.\n\nJeudi 4 juin\n« Quatre jours avant »\nJe relis pour la dernière fois mes dossiers, je prépare mes adieux. Neuf enveloppes posées sur le secrétaire — neuf noms, neuf ardoises à solder. Mes derniers rappels d'échéance, pour samedi matin chez les Beuhaies. Quand je serai en mer, ils dormiront mieux. Moi aussi.\n\nVendredi 5 juin\n« Une lettre cachée »\nJ'ai écrit ce soir une lettre que je ne remettrai pas. Elle attendra. Pliée dans le coffret, sous la malle de rotin du jardin, avec un autre papier plus brûlant. Un acte de naissance que personne ne devrait jamais lire. Demain, à la soirée de Chloé, je laisserai entendre. Cette femme a volé une vie en mai 1910 — je vais la rendre, et réparer pour l'enfant qu'on a dépouillée avec elle.\n\nSAMEDI 6 JUIN  ★ AUJOURD'HUI ★\n« Au grand large »\nNeuf rappels distribués ce matin dans le hall — pliés, scellés, glissés en mains propres. Chloé fête ses trente ans. J'ai mis mes plus beaux gants. Demain matin, six heures, le train du Havre. J'emporte mes Servantes, mes plumes, et une cabine au nom d'une autre. Au grand large.\n\n(Les comptes de chantage de Léa — L.R. Louis-Marc, G.L. Gautier, B.A. Plumeau, T.P. Vienne, C.C. Clochette, T.C. Tatoine, B.M. Boulet, L.L. origines, E.C.S. Beauchamp 1910 — sont sur un autre cahier dans le tiroir. Ils ne servent pas au code du coffret.)",
+    text:"PAGE 1 — GRILLE DE MES CODES (méthode personnelle)\nA=1  B=2  C=3  D=4  E=5  F=6  G=7  H=8  I=9\nJ→1  K→2  L→3  M→4  N→5  O→6  P→7  Q→8  R→9\nS→1  T→2  U→3  V→4  W→5  X→6  Y→7  Z→8\n\n« Pour mes coffres et mes serrures, je prends les initiales des trois mots du titre de mon poème du jour. Je convertis chaque lettre en un chiffre (si la lettre vaut plus de neuf, j'additionne — 12 → 1+2 = 3). Le code change ainsi tous les jours. — L. »\n\n— — — JOURNAL DE BORD — — —\n\nLundi 1er juin\n« Ma décision prise »\nJ'ai pris ma décision hier soir, au creux d'un orage. Trop de noms portés dans ce carnet, trop de secrets pesés dans cette main qui écrit. Mon âme étouffe sous le poids des fortunes d'autrui. Demain je vendrai mes meubles. La semaine prochaine, je prendrai la mer. Sept ans à plumer les puissants à Londres : il est temps que cette comédie cesse.\n\nMardi 2 juin\n« Bateau parle anglais »\nJe me suis présentée chez Thomas Cook ce matin, voilette baissée. Le Berengaria appareille du Havre vendredi 12 juin. Cabine B-37, première classe. J'ai signé Mademoiselle Léa de Pavy — peut-être la dernière fois. New York, dit-on, accueille les femmes qui ont des choses à oublier.\n\nMercredi 3 juin\n« Vendre mes meubles »\nL'antiquaire est venu cet après-midi. Il a touché du doigt la commode de Maman, sans un mot. Trois cents livres pour le tout. J'ai accepté. Je n'emporterai qu'une malle et mes plumes. Les Servantes, mon roman, partira sous mon bras — c'est en cherchant pour ce livre qu'une vérité m'est revenue.\n\nJeudi 4 juin\n« Quatre jours avant »\nJe relis pour la dernière fois mes dossiers, je prépare mes adieux. Huit enveloppes posées sur le secrétaire — huit noms, huit ardoises à solder. Mes derniers rappels d'échéance, pour samedi matin chez les Beuhaies. Quand je serai en mer, ils dormiront mieux. Moi aussi.\n\nVendredi 5 juin\n« Une lettre cachée »\nJ'ai écrit ce soir une lettre que je ne remettrai pas. Elle attendra. Pliée dans le coffret, sous la malle de rotin du jardin, avec un autre papier plus brûlant. Un acte de naissance que personne ne devrait jamais lire. Demain, à la soirée de Chloé, je laisserai entendre. Cette femme a volé une vie en mai 1910 — je vais la rendre, et réparer pour l'enfant qu'on a dépouillée avec elle.\n\nSAMEDI 6 JUIN  ★ AUJOURD'HUI ★\n« Au grand large »\nHuit rappels distribués ce matin dans le hall — pliés, scellés, glissés en mains propres. Chloé fête ses trente ans. J'ai mis mes plus beaux gants. Demain matin, six heures, le train du Havre. J'emporte mes Servantes, mes plumes, et une cabine au nom d'une autre. Au grand large.\n\n(Les comptes de chantage de Léa — L.R. Louis-Marc, G.L. Gautier, B.A. Plumeau, T.P. Vienne, C.C. Clochette, T.C. Tatoine, B.M. Boulet, L.L. origines — sont sur un autre cahier dans le tiroir. Ils ne servent pas au code du coffret.)",
     revealsOnView:["carnet_lu","plumeau_indice","clochette_jeu","methode_journal"]},
   notes_recherche:{name:"Notes de recherche de Léa",icon:"📝",location:"dependance",fromAct:4,
     desc:"Notes manuscrites destinées à son prochain roman.",
@@ -1126,7 +1141,7 @@ function askQ(charId,qId){
     body+=`<div class="success-card"><h3>★ La vérité éclate ★</h3>
       <p style="text-align:center;color:var(--brown);line-height:1.7">
       Lady Amandinette de Parisette — née Amandine de la Grande Leuleu, ancienne servante chez les Beauchamp, usurpe l’identité de sa maîtresse Mademoiselle Amandinette de Beauchamp morte d’une fièvre — vole sa carte d’invitation au bal Parisette et une de ses robes, y rencontre Théodorette et l’épouse — a tué Léa pour préserver son imposture. Théodorette est dévasté. Le jardin se tait. Vous avez résolu l'affaire.</p>
-      <p style="text-align:center;color:var(--brown-2);font-size:14px;line-height:1.6;margin-top:8px">Et le coffret a livré une dernière vérité : la jeune Maëlys est <b>Camille Beauchamp</b>, l'héritière dépossédée que Léa voulait rétablir ; sommé d'authentifier l'acte, le notaire <b>Emilien</b> a avoué la fraude de 1910.</p>
+      <p style="text-align:center;color:var(--brown-2);font-size:14px;line-height:1.6;margin-top:8px">Et le coffret a livré une dernière vérité, sous la cire d'un pli pour Mademoiselle Bouchard : la jeune Maëlys est <b>Camille Beauchamp</b>, la nièce de la véritable Amandinette — l'héritière dépossédée que Léa voulait rétablir avant de partir.</p>
       <p style="margin-top:14px"><b>Drames parallèles révélés :</b></p>
       <p style="font-size:14px;color:var(--brown-2);text-align:left;padding:0 14px">
       • <b>Théodorette</b> : chantage Vienne. Couvrait Amandinette par instinct.<br>
@@ -1135,7 +1150,6 @@ function askQ(charId,qId){
       • <b>Baptiste (M. Plumeau)</b> : démasqué par Léa ; la fiole avait été plantée dans son manteau.<br>
       • <b>Lisa</b> : cantatrice, ex-amante de Léa et amante de Baptiste. Origines modestes cachées (fausse piste).<br>
       • <b>Alicia ⟷ Baptiste</b> : liaison passée, lettres « B. » confiées à Léa.<br>
-      • <b>Emilien</b> : notaire, faussaire complice de l'imposture de 1910 (chantage 5 000 £).<br>
       • <b>Maëlys</b> : en réalité Camille Beauchamp, l'héritière dépossédée — que Léa voulait rétablir.<br>
       • <b>Clochette</b> : dettes de jeu.<br>
       • <b>Boulet ⟷ Tatoine</b> : lettres anciennes.
@@ -1191,6 +1205,20 @@ function doInteract(objId,gives){
   setTimeout(()=>openObject(gives),100);
 }
 
+function showPlan(){
+  openDlg({
+    title:"Plan du Domaine des Beuhaies",
+    role:"votre référence — consultable à tout moment",
+    icon:"🗺️",
+    body:`<div style="text-align:center;padding:8px">
+      <p style="font-size:13px;color:var(--brown-2);font-style:italic;margin:0 0 12px">
+        Le plan tracé par Sir Amaury. Servez-vous-en pour situer les pièces et planifier vos déplacements.
+      </p>
+      <img src="Plan.png" alt="Plan du Domaine" style="width:100%;max-width:760px;border:2px solid var(--gold);border-radius:8px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.15)">
+    </div>`
+  });
+}
+
 function tryCode(objId){
   const o=OBJECTS[objId];
   const input=$("#codeinput").value.trim();
@@ -1202,7 +1230,13 @@ function tryCode(objId){
     noteToBook("Énigme résolue","La boîte de la malle s'ouvre. Vrai acte de naissance + lettre du 5 juin.");
     setTimeout(()=>{openObject((o.onCodeSuccess||[])[0]);renderAll()},1300);
   } else {
-    fb.innerHTML=`<p class="failure">${o.onCodeFail||"Mauvais code."}</p>`;
+    State.codeAttempts=(State.codeAttempts||0)+1;
+    const t=State.codeAttempts;
+    let extra="";
+    if(t===3) extra=" <b>Indice</b> : la phrase du jour de Léa est dans son journal de bord (entrée du <i>samedi 6 juin</i>).";
+    else if(t>=5) extra=" <b>Indice</b> : titre du jour = « <i>Au grand large</i> ». Initiales → grille A=1, G=7, L=12→3.";
+    fb.innerHTML=`<p class="failure">${o.onCodeFail||"Mauvais code."}${extra}</p><p class="hint" style="text-align:center;margin-top:6px">Tentatives : ${t}</p>`;
+    document.querySelector('.code-box')?.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:280});
   }
 }
 

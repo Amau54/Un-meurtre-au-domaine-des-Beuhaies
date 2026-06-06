@@ -9,6 +9,10 @@
 
 ---
 
+
+
+> 🗺️ **OBJET 0 — Plan du Domaine** : ne demande PAS à l'IA de le générer. Le fichier `Plan.png` est déjà à la racine du projet : imprime-le en **A3** (idéalement plastifié) ou en **A4**. À placer sur un guéridon du salon dès l'arrivée de Chloé ; consultable à tout moment dans l'app via le bouton 🗺️.
+
 ## ⚙️ PROMPT MAÎTRE — à copier-coller une seule fois
 
 ```
@@ -33,7 +37,7 @@ PROTOCOLE :
 - Un seul objet à la fois, puis tu t’ARRÊTES et tu attends ma prochaine commande.
 Confirme en UNE phrase que tu as compris, puis attends mon premier numéro.
 
-============== CATALOGUE (25 objets, dans l’ordre) ==============
+============== CATALOGUE (24 objets + Plan, dans l’ordre) ==============
 
 OBJET 1 — Mot du banc — Format : A6 portrait (105 × 148 mm) — MAIN DE LÉA
 Texte exact :
@@ -128,14 +132,7 @@ Une voix comme la vôtre porte loin — jusqu’aux registres d’un lavoir de B
 Je m’embarque sous peu : ce sera notre dernière note, au sens propre. Baptiste n’a pas à le savoir.
 — L.
 
-OBJET 14 — Mot à Maître Emilien Collin-Stanislas — Format : A6 portrait (105 × 148 mm) — MAIN DE LÉA
-Texte exact :
-Maître,
-Le passé Beauchamp ne s’efface pas — vous le savez mieux que personne, vous qui en avez rédigé le mensonge en 1910 et bâti votre fortune sur son silence. Cinq mille livres ce soir, et les actes restent au fond de mes tiroirs.
-Je pars bientôt ; ce sera notre dernier acte notarié, en quelque sorte.
-— L.
-
-OBJET 15 — Carnet de Léa, page 1 : la grille — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
+OBJET 14 — Carnet de Léa, page 1 : la grille — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
 Contenu exact (titre souligné, tableau manuscrit aligné, puis paragraphe) :
 Grille de mes codes — méthode personnelle —
 A=1   B=2   C=3   D=4   E=5   F=6   G=7   H=8   I=9
@@ -144,43 +141,43 @@ S=19→1   T=20→2   U=21→3   V=22→4   W=23→5   X=24→6   Y=25→7   Z=2
 « Pour mes coffres et mes serrures, je prends les initiales des trois mots de ma phrase du jour, dans mon journal de bord. Je convertis chaque lettre en un chiffre (de 1 à 9) ; si la lettre vaut plus de neuf, j’additionne (12 → 1+2 = 3). Le code change ainsi tous les jours. C’est ma méthode personnelle. »
 — L.
 
-OBJET 16 — Journal, lundi 1er juin — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
+OBJET 15 — Journal, lundi 1er juin — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
 Contenu exact (date en tête, titre souligné, poème) :
 Lundi 1er juin
 « Ma décision prise »
 J’ai pris ma décision hier soir, au creux d’un orage. Trop de noms portés dans ce carnet, trop de secrets pesés dans cette main qui écrit. Mon âme étouffe sous le poids des fortunes d’autrui — j’en ai gagné assez pour qu’on ne me retrouve plus. Demain je vendrai mes meubles. La semaine prochaine, je prendrai la mer. Je veux des terres où nul ne sait que j’écris. Une autre patrie pour mes plumes, et pour moi un nom plus léger. Sept ans à plumer les puissants à Londres : il est temps que cette comédie cesse, et qu’une autre commence, sans public.
 
-OBJET 17 — Journal, mardi 2 juin — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
+OBJET 16 — Journal, mardi 2 juin — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
 Contenu exact :
 Mardi 2 juin
 « Bateau parle anglais »
 Je me suis présentée chez Thomas Cook ce matin, voilette baissée. Le commis souriait sans comprendre l’enjeu de mon billet. Le Berengaria appareille du Havre vendredi 12 juin, à dix heures. Première classe, cabine B-37. J’ai signé Mademoiselle Léa de Pavy — c’est peut-être la dernière fois que ce nom paraîtra sur un registre français. Sur la traversée, j’apprendrai à le perdre. New York, dit-on, accueille les femmes qui ont des choses à oublier. Je suis exactement cela : une femme qui a trop su, et qui s’en va.
 
-OBJET 18 — Journal, mercredi 3 juin — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
+OBJET 17 — Journal, mercredi 3 juin — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
 Contenu exact :
 Mercredi 3 juin
 « Vendre mes meubles »
 L’antiquaire est venu cet après-midi. Il a touché du doigt la commode héritée de Maman, sans un mot. Il m’a offert trois cents livres pour le tout — la commode, le secrétaire, les fauteuils, les tapis. J’ai accepté sans marchander. Ce qu’une vie d’avare m’a rapporté, un soir d’antiquaire le défait. Je n’emporterai qu’une malle et mes plumes. Les Servantes, mon roman, partira sous mon bras — c’est la seule chose qui ne se vend pas. À ses pages je dois ma révélation : c’est en cherchant pour ce livre qu’une vérité m’est revenue, qui changera tout dans quelques jours.
 
-OBJET 19 — Journal, jeudi 4 juin — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
+OBJET 18 — Journal, jeudi 4 juin — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
 Contenu exact :
 Jeudi 4 juin
 « Quatre jours avant »
-Quatre jours. Je relis pour la dernière fois mes dossiers, et je prépare mes adieux. Neuf enveloppes posées sur le secrétaire — neuf noms, neuf ardoises à solder. Mes derniers rappels d’échéance, pour samedi matin chez les Beuhaies. Quand je serai en mer, ils dormiront mieux. Moi aussi. Ce soir, je dîne seule. Sir Amaury m’a fait porter un panier de framboises de son jardin — comme une dernière offrande dont il ignore le poids. Le Domaine des Beuhaies fut, ces dernières années, ma scène préférée. C’est là que tout finira.
+Quatre jours. Je relis pour la dernière fois mes dossiers, et je prépare mes adieux. Huit enveloppes posées sur le secrétaire — huit noms, huit ardoises à solder. Mes derniers rappels d’échéance, pour samedi matin chez les Beuhaies. Quand je serai en mer, ils dormiront mieux. Moi aussi. Ce soir, je dîne seule. Sir Amaury m’a fait porter un panier de framboises de son jardin — comme une dernière offrande dont il ignore le poids. Le Domaine des Beuhaies fut, ces dernières années, ma scène préférée. C’est là que tout finira.
 
-OBJET 20 — Journal, vendredi 5 juin — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
+OBJET 19 — Journal, vendredi 5 juin — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
 Contenu exact :
 Vendredi 5 juin
 « Une lettre cachée »
 J’ai écrit ce soir une lettre que je ne remettrai pas. Elle attendra. Je l’ai pliée dans le coffret, sous la malle de rotin du jardin, avec un autre papier — plus ancien, plus brûlant. Un acte de naissance que personne ne devrait jamais lire, et qui pourtant porte le nom d’une femme que tout Londres a applaudie sous un faux titre. Demain, à la soirée de Chloé, je laisserai entendre. Une phrase, peut-être. Un regard. Le Duc comprendra avant que je ne parte. Je dois cesser de protéger les imposteurs. Cette femme a volé une vie en mai 1910 — je vais la rendre à celle qui n’est plus, et réparer, enfin, pour l’enfant qu’on a dépouillée avec elle.
 
-OBJET 21 — Journal, samedi 6 juin (le code) — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
+OBJET 20 — Journal, samedi 6 juin (le code) — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA
 Contenu exact (ajoute une petite étoile dessinée près du titre) :
 SAMEDI 6 JUIN
 « Au grand large »   ★ AUJOURD’HUI ★
-Aujourd’hui. Neuf rappels distribués ce matin dans le hall — pliés, scellés, glissés en mains propres avec un sourire de cire. Chacun les rangera comme on range une braise. Chloé fête ses trente ans. J’ai mis mes plus beaux gants, ma plus belle robe, comme une révérence d’adieu. Aux Beuhaies, on prendra le thé, on se complimentera, et l’on s’ignorera savamment — la chorégraphie qu’ils connaissent tous par cœur. Je danserai la dernière. Demain matin, six heures, le train du Havre. Je quitterai ce pays sans regret. J’emporte mes Servantes, mes plumes, et une cabine au nom d’une autre. Au grand large.
+Aujourd’hui. Huit rappels distribués ce matin dans le hall — pliés, scellés, glissés en mains propres avec un sourire de cire. Chacun les rangera comme on range une braise. Chloé fête ses trente ans. J’ai mis mes plus beaux gants, ma plus belle robe, comme une révérence d’adieu. Aux Beuhaies, on prendra le thé, on se complimentera, et l’on s’ignorera savamment — la chorégraphie qu’ils connaissent tous par cœur. Je danserai la dernière. Demain matin, six heures, le train du Havre. Je quitterai ce pays sans regret. J’emporte mes Servantes, mes plumes, et une cabine au nom d’une autre. Au grand large.
 
-OBJET 22 — Cahier des comptes de Léa — Format : A5 paysage (210 × 148 mm) — MAIN DE LÉA
+OBJET 21 — Cahier des comptes de Léa — Format : A5 paysage (210 × 148 mm) — MAIN DE LÉA
 Contenu exact (titre souligné, colonnes alignées) :
 Mon carnet des affaires — état des comptes
 L.R. — Louis-Marc        5 ✦ 0 ✦ 0        (500 livres)            en attente
@@ -191,11 +188,10 @@ C.C. — Clochette         1 ✦ 0 ✦ 0 ✦ 0    (1 000 livres)          en att
 T.C. — Tatoine           2 ✦ 0 ✦ 0        (200 livres / trim.)    ✓ régulier
 B.M. — Boulet            2 ✦ 0 ✦ 0        (200 livres / trim.)    ✓ régulier
 L.L. — origines          8 ✦ 0 ✦ 0        (800 livres)            en attente
-E.C.S. — Beauchamp 1910  5 ✦ 0 ✦ 0 ✦ 0    (5 000 livres)          en attente
 (annotation en marge, plus petite) « M.R. — potager — non, garder le silence »
 ★ La Duchesse — affaire spéciale, sans prix — voir mes notes de recherche ★
 
-OBJET 23 — Notes de recherche (« Les Servantes ») — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA (style brouillon : tirets, soulignements, deux ou trois ratures fines)
+OBJET 22 — Notes de recherche (« Les Servantes ») — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA (style brouillon : tirets, soulignements, deux ou trois ratures fines)
 Contenu exact :
 Notes — projet de roman
 « Les Servantes »
@@ -209,7 +205,7 @@ Théodorette de Parisette l’épouse quatre mois plus tard.
 Doit en parler à Théodorette cette semaine — je ne peux plus garder ce silence, et je ne le porterai pas avec moi sur l’Atlantique.
 — L.
 
-OBJET 24 — Lettre Baptiste → Alicia — Format : A5 portrait (148 × 210 mm) — MAIN DE BAPTISTE
+OBJET 23 — Lettre Baptiste → Alicia — Format : A5 portrait (148 × 210 mm) — MAIN DE BAPTISTE
 Texte exact :
 Paris, le 17 mars
 — il y a un an —
@@ -220,7 +216,7 @@ Brûlez celle-ci, je vous en supplie, ou cachez-la là où votre mari ne la trou
 Je vous aime. Lâchement, à distance, mais entièrement.
 — B.
 
-OBJET 25 — Lettre Léa → Marie — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA (registre tendre, plus arrondi)
+OBJET 24 — Lettre Léa → Marie — Format : A5 portrait (148 × 210 mm) — MAIN DE LÉA (registre tendre, plus arrondi)
 Texte exact :
 Les Beuhaies, le 12 mai
 Ma Marie,
