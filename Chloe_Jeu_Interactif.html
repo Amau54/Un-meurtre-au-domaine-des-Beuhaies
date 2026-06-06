@@ -555,7 +555,6 @@ const CHARACTERS = {
     ]},
   theodorette:{name:"Duc Théodorette de Parisette",nickname:"Théodorette",role:"diplomate, époux d'Amandinette",statut:"suspect",icon:"🎩",order:2,
     presentation:"« Duc Théodorette de Parisette, diplomate. Mon épouse Amandinette et moi sommes très liés à cette maison. »",
-    tenue:"Frac noir de diplomate, gilet gris perle à boutons d'argent, plastron blanc amidonné, chaîne de montre en or — élégance figée d'un homme du protocole.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"lea_relation",label:"Connaissiez-vous bien Léa ?",act:1,
@@ -577,7 +576,6 @@ const CHARACTERS = {
     ]},
   louis:{name:"Lord Louis-Marc de Riegel",nickname:"Louis",role:"médecin, époux de Marie",statut:"suspect",icon:"⚕️",order:3,
     presentation:"« Lord Louis-Marc de Riegel, médecin. Mon épouse Marie est pianiste. Nous fréquentons le Domaine depuis longtemps. »",
-    tenue:"Costume trois-pièces gris anthracite, lavallière sombre, fine montre de gousset, mallette médicale en cuir fauve.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"lea_relation",label:"Connaissiez-vous bien Léa ?",act:1,
@@ -603,7 +601,6 @@ const CHARACTERS = {
     ]},
   marie:{name:"Lady Marie de Riegel",nickname:"Marie",role:"pianiste, épouse de Louis",statut:"discret",icon:"🎹",order:4,
     presentation:"« Lady Marie de Riegel, pianiste. Épouse de Louis. Léa était mon amie la plus chère. »",
-    tenue:"Longue robe de mousseline rose poudré, taille basse années folles, châle de soie ivoire, broche-camée, mains gantées de dentelle.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"lea_relation",label:"Connaissiez-vous bien Léa ?",act:1,
@@ -649,7 +646,6 @@ const CHARACTERS = {
     ]},
   alicia:{name:"Lady Alicia de Lemoine",nickname:"Alicia",role:"épouse de Gautier",statut:"discret",icon:"🎼",order:6,
     presentation:"« Lady Alicia de Lemoine, épouse de Gautier. Léa était une de mes plus proches amies. »",
-    tenue:"Robe garçonne en jersey vert d'eau, cheveux à la garçonne, long sautoir de jais, cigarette en main nerveuse — élégance moderne, un peu froide.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"lea_relation",label:"Connaissiez-vous bien Léa ?",act:1,
@@ -693,7 +689,6 @@ const CHARACTERS = {
     ]},
   boulet:{name:"Lady Boulet de Myrtilles",nickname:"Boulet",role:"lectrice d'annuaires, discrète",statut:"bavard",icon:"📚",order:8,
     presentation:"« Lady Boulet de Myrtilles, généalogiste amateur. Je passe le plus clair de mes après-midi avec mes annuaires. »",
-    tenue:"Tailleur de tweed prune sobre, chignon serré, lorgnon doré au cou, gants de coton beige, gros livre relié sur l'accoudoir.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"lea_relation",label:"Connaissiez-vous bien Léa ?",act:1,
@@ -773,7 +768,6 @@ const CHARACTERS = {
     ]},
   clochette:{name:"Lady Cloé Fischer de Crevonville",nickname:"Clochette",role:"mondaine, épouse de Tatoine",statut:"bavard",icon:"🃏",order:11,
     presentation:"« Lady Cloé Fischer de Crevonville, épouse de Tatoine. Je ne manque jamais un anniversaire des Beuhaies. »",
-    tenue:"Robe de cocktail rose champagne à franges, ferronnière à plume, gants courts crème, fume-cigarette d'écaille, perles aux poignets.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"lea_relation",label:"Connaissiez-vous bien Léa ?",act:1,
@@ -795,7 +789,6 @@ const CHARACTERS = {
     ]},
   victoria:{name:"Lady Victoria Chevessand",nickname:"Victoria",role:"amie de Chloé, découvre le corps",statut:"bavard",icon:"🌹",order:12,
     presentation:"« Lady Victoria Chevessand, amie de Chloé depuis l'école. C'est moi qui ai découvert le corps. »",
-    tenue:"Robe longue rouge sang à bretelles fines, capeline noire à plume d'autruche, rouge à lèvres carmin, longs colliers d'ambre superposés.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"lea_relation",label:"Connaissiez-vous bien Léa ?",act:1,
@@ -817,7 +810,6 @@ const CHARACTERS = {
     ]},
   lisa:{name:"Mademoiselle Lisa Lepra",nickname:"Lisa",role:"cantatrice, ancienne muse de Léa",statut:"suspect",icon:"🎭",order:13,
     presentation:"« Lisa Lepra. On m'a applaudie à Vienne, à Milan, à l'Opéra. Ce soir, je ne chante pas — je pleure une amie. »",
-    tenue:"Robe de scène en velours noir profond, long fourreau qui balaie le sol, cape de soie pourpre, broche-émeraude au corsage, rouge à lèvres rouge sombre.",
     questions:[
       {id:"presentation",label:"Présentez-vous.",act:1,isPresentation:true},
       {id:"lea_relation",label:"Connaissiez-vous bien Léa ?",act:1,
@@ -1238,7 +1230,7 @@ function askQ(charId,qId){
   if(q.endGame){
     body+=`<div class="success-card"><h3>★ La vérité éclate ★</h3>
       <p style="text-align:center;color:var(--brown);line-height:1.7">
-      Lady Amandinette de Parisette — née Amandine de la Grande Leuleu, ancienne servante chez les Beauchamp, usurpe l’identité de sa maîtresse Mademoiselle Amandinette de Beauchamp morte d’une fièvre — vole sa carte d’invitation au bal Parisette et une de ses robes, y rencontre Théodorette et l’épouse — a tué Léa pour préserver son imposture. Théodorette est dévasté. Le jardin se tait. Vous avez résolu l'affaire.</p>
+      Lady Amandinette de Parisette a craqué — la duchesse a parlé son vrai nom à voix haute pour la première fois depuis quinze ans.<br><br><i>« Oui. C'est mon nom. Amandine — Marguerite — de la Grande Leuleu. Fille d'un sabotier. […] On m'a placée à quatorze ans chez les Beauchamp […] Le seize mai 1910, Mademoiselle Amandinette a pris la fièvre […] J'ai pris la robe. J'ai pris la carte. […] Théodorette est la seule chose, en quinze ans, que je n'aie pas volée. Je l'ai épousé sous un faux nom, mais je l'ai aimé sous le mien. »</i><br><br><b>Sur Léa</b> — « Sa dernière lettre voulait me défaire. J'ai compris qu'aucune somme ne suffirait. Au toast — un faux pas, la coupe de Léa, la digitaline qui glisse. Je l'ai regardée rire. J'ai pensé : tu n'as plus que quarante minutes. »<br><br><b>Sur Maëlys</b> (sa voix se brise) — « Camille Beauchamp. C'est votre vrai nom, je l'ignorais. J'ignorais qu'il y avait une nièce. Léa savait. C'est pour cela qu'elle vous a fait inviter ce soir. Ce nom-là — Beauchamp — il est à vous. Reprenez-le. »<br><br><b>Sa dernière demande</b> — « Sir Amaury, une chambre fermée à clef jusqu'au matin. Théodorette — je voudrais le voir, seul, une heure. Lui parler sous mon vrai nom, comme je n'ai jamais pu. Demain, les gendarmes feront ce qu'ils ont à faire. »<br><br><b>Et pour Léa</b> — « Qu'on l'enterre avec ce qu'elle a été : non pas une maître-chanteuse, ce qu'elle fut aussi, mais une romancière qui, à la dernière page de sa vie, écrivait pour réparer. C'est elle qui a gagné ce soir. »<br><br>Théodorette est dévasté. Le jardin se tait. <b>Vous avez résolu l'affaire.</b></p>
       <p style="text-align:center;color:var(--brown-2);font-size:14px;line-height:1.6;margin-top:8px">Et le coffret a livré une dernière vérité, sous la cire d'un pli pour Mademoiselle Bouchard : la jeune Maëlys est <b>Camille Beauchamp</b>, la nièce de la véritable Amandinette — l'héritière dépossédée que Léa voulait rétablir avant de partir.</p>
       <p style="margin-top:14px"><b>Drames parallèles révélés :</b></p>
       <p style="font-size:14px;color:var(--brown-2);text-align:left;padding:0 14px">
