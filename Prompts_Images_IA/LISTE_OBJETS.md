@@ -1,5 +1,8 @@
 # Liste des objets — repère rapide
 
+> 📌 **Tu cherches juste où poser chaque mot de Léa ?** Va directement à `PLACEMENTS_DES_MOTS.md` — c'est un fichier dédié, organisé par destinataire et par lieu, avec un plan rapide.
+
+
 24 objets à fabriquer + le **Plan du Domaine** (existant, à imprimer). Pour chacun : taille, où le poser, finition à la main.
 
 | Nº | Objet | Taille | Où le poser | Finition main |
